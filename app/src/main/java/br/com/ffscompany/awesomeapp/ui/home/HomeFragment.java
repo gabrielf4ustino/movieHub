@@ -1,7 +1,6 @@
 package br.com.ffscompany.awesomeapp.ui.home;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +18,8 @@ import androidx.recyclerview.widget.SnapHelper;
 import com.uwetrottmann.tmdb2.entities.BaseMovie;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
+import br.com.ffscompany.awesomeapp.service.Options;
 import br.com.ffscompany.awesomeapp.databinding.FragmentHomeBinding;
 import br.com.ffscompany.awesomeapp.service.TmdbService;
 import br.com.ffscompany.awesomeapp.ui.home.recyclerView.RecyclerViewAdapter;
@@ -29,6 +28,9 @@ import br.com.ffscompany.awesomeapp.ui.home.slider.SliderViewAdapter;
 public class HomeFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<BaseMovie>> {
 
     private FragmentHomeBinding binding;
+
+    public enum DiaSemana {nowPlaying, popular}
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,10 +58,10 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
         switch (id) {
             case 0:
                 // Retorna um novo loader para carregar dados do tipo 1
-                return new TmdbService(requireContext(), "nowPlaying");
+                return new TmdbService(requireContext(), Options.nowPlaying);
             case 1:
                 // Retorna um novo loader para carregar dados do tipo 2
-                return new TmdbService(requireContext(), "popular");
+                return new TmdbService(requireContext(), Options.popular);
             default:
                 // Retorna null caso o ID seja inválido
                 return null;

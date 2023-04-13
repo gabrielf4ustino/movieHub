@@ -1,7 +1,6 @@
 package br.com.ffscompany.awesomeapp.service;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -20,9 +19,9 @@ import retrofit2.Response;
 public class TmdbService extends AsyncTaskLoader<List<BaseMovie>> {
     private static final String API_KEY = "c7dd226ddb8f77f0536becda18f3c4fb";
 
-    private final String option;
+    private final Options option;
 
-    public TmdbService(@NonNull Context context, String option) {
+    public TmdbService(@NonNull Context context, Options option) {
         super(context);
         this.option = option;
     }
@@ -33,14 +32,14 @@ public class TmdbService extends AsyncTaskLoader<List<BaseMovie>> {
         Tmdb tmdb = new Tmdb(API_KEY);
         Response<MovieResultsPage> response = null;
         switch (this.option) {
-            case "nowPlaying":
+            case nowPlaying:
                 try {
                     response = tmdb.moviesService().nowPlaying(null, null, null).execute();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 break;
-            case "popular":
+            case popular:
                 try {
                     response = tmdb.moviesService().popular(null, null, null).execute();
                 } catch (IOException e) {
