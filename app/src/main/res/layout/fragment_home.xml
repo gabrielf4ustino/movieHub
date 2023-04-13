@@ -18,10 +18,11 @@
         android:id="@+id/nowPlayingText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
+        android:paddingTop="20dp"
+        android:paddingStart="10dp"
         android:text="@string/em_cartaz"
-        android:textStyle="bold"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/slider" />
@@ -32,13 +33,15 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nowPlayingText" />
+        app:layout_constraintTop_toBottomOf="@+id/nowPlayingText"
+        android:padding="10dp"/>
 
     <TextView
         android:id="@+id/popularText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
+        android:paddingTop="5dp"
+        android:paddingStart="10dp"
         android:text="@string/populares"
         android:textStyle="bold"
         android:textSize="20sp"
@@ -54,6 +57,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/popularText" />
+        app:layout_constraintTop_toBottomOf="@+id/popularText"
+        android:padding="10dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
