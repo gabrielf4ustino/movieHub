@@ -7,14 +7,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class HomeViewModel extends ViewModel {
 
-    private final MutableLiveData<RecyclerView> recyclerViewMutableLiveData;
+    private final MutableLiveData<String> text;
 
-    public HomeViewModel(RecyclerView recyclerView) {
-        recyclerViewMutableLiveData = new MutableLiveData<>();
-        recyclerViewMutableLiveData.setValue(recyclerView);
+    public HomeViewModel() {
+        text = new MutableLiveData<>();
+        text.setValue("text");
     }
 
-    public LiveData<RecyclerView> getRecyclerView() {
-        return recyclerViewMutableLiveData;
+    public LiveData<String> getText() {
+        return text;
     }
 }

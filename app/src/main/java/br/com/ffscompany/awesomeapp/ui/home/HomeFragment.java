@@ -1,29 +1,29 @@
 package br.com.ffscompany.awesomeapp.ui.home;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.view.GestureDetectorCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SnapHelper;
 
 import com.uwetrottmann.tmdb2.entities.BaseMovie;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import br.com.ffscompany.awesomeapp.databinding.FragmentHomeBinding;
-import br.com.ffscompany.awesomeapp.databinding.FragmentNotificationsBinding;
 import br.com.ffscompany.awesomeapp.service.TmdbService;
 import br.com.ffscompany.awesomeapp.ui.home.recyclerView.RecyclerViewAdapter;
-import br.com.ffscompany.awesomeapp.ui.notifications.NotificationsViewModel;
+import br.com.ffscompany.awesomeapp.ui.home.slider.SliderViewAdapter;
 
 public class HomeFragment extends Fragment {
 
@@ -35,26 +35,31 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        TmdbService tmdbDbService = new TmdbService();
         List<BaseMovie> nowPlayingMovies = null;
         List<BaseMovie> popularMovies = null;
         try {
-            nowPlayingMovies = tmdbDbService.execute("nowPlaying").get();
-//            popularMovies = tmdbDbService.execute("popular").get();
+            nowPlayingMovies = new TmdbService("nowPlaying").execute().get();
+            popularMovies = new TmdbService("popular").execute().get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        RecyclerView nowPlayingRecyclerView = binding.nowPlayingMovies;
-        recyclerViewAdapter = new RecyclerViewAdapter(getContext(), nowPlayingMovies);
-        nowPlayingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-        nowPlayingRecyclerView.setAdapter(recyclerViewAdapter);
 
-//        RecyclerView popularMoviesRecyclerView = binding.popularMovies;
-//        recyclerViewAdapter = new RecyclerViewAdapter(getContext(), popularMovies);
-//        popularMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-//        popularMoviesRecyclerView.setAdapter(recyclerViewAdapter);
+        RecyclerView slider = binding.slider;
+        slider.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        slider.setAdapter(new SliderViewAdapter(getContext(), popularMovies));
+        SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(slider);
+
+
+        RecyclerView nowPlayingRecyclerView = binding.nowPlayingMovies;
+        nowPlayingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        nowPlayingRecyclerView.setAdapter(new RecyclerViewAdapter(getContext(), nowPlayingMovies));
+
+        RecyclerView popularMoviesRecyclerView = binding.popularMovies;
+        popularMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        popularMoviesRecyclerView.setAdapter(new RecyclerViewAdapter(getContext(), popularMovies));
 
         return root;
     }
