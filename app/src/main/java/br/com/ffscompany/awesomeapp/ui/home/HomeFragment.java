@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,8 +20,8 @@ import com.uwetrottmann.tmdb2.entities.BaseMovie;
 
 import java.util.List;
 
-import br.com.ffscompany.awesomeapp.service.Options;
 import br.com.ffscompany.awesomeapp.databinding.FragmentHomeBinding;
+import br.com.ffscompany.awesomeapp.service.Options;
 import br.com.ffscompany.awesomeapp.service.TmdbService;
 import br.com.ffscompany.awesomeapp.ui.home.recyclerView.RecyclerViewAdapter;
 import br.com.ffscompany.awesomeapp.ui.home.slider.SliderViewAdapter;
@@ -28,9 +29,6 @@ import br.com.ffscompany.awesomeapp.ui.home.slider.SliderViewAdapter;
 public class HomeFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<BaseMovie>> {
 
     private FragmentHomeBinding binding;
-
-    public enum DiaSemana {nowPlaying, popular}
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -90,6 +88,10 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
                     RecyclerView popularMoviesRecyclerView = binding.popularMovies;
                     popularMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
                     popularMoviesRecyclerView.setAdapter(new RecyclerViewAdapter(getContext(), movies));
+
+                    RecyclerView nowPlayingRecyclerView = binding.gridMovies;
+                    nowPlayingRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
+                    nowPlayingRecyclerView.setAdapter(new RecyclerViewAdapter(getContext(), movies));
                 }
                 break;
         }
@@ -97,7 +99,7 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
 
     @Override
     public void onLoaderReset(@NonNull Loader<List<BaseMovie>> loader) {
-//        loader.reset();
+        loader.reset();
     }
 
 }
