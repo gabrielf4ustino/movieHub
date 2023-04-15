@@ -1,18 +1,12 @@
 package br.com.ffscompany.awesomeapp.ui.home.slider;
 
 import android.content.Context;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.core.view.GestureDetectorCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
 
 import com.bumptech.glide.Glide;
 import com.uwetrottmann.tmdb2.entities.BaseMovie;
