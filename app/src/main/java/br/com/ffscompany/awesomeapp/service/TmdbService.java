@@ -1,7 +1,11 @@
 package br.com.ffscompany.awesomeapp.service;
 
-import android.os.AsyncTask;
+import android.content.Context;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.loader.content.AsyncTaskLoader;
 
 import com.uwetrottmann.tmdb2.Tmdb;
 import com.uwetrottmann.tmdb2.entities.BaseMovie;
@@ -12,37 +16,47 @@ import java.util.List;
 
 import retrofit2.Response;
 
-public class TmdbService extends AsyncTask<String, Void, List<BaseMovie>> {
+public class TmdbService extends AsyncTaskLoader<List<BaseMovie>> {
     private static final String API_KEY = "c7dd226ddb8f77f0536becda18f3c4fb";
 
-    private final String option;
+    private final Options option;
 
-    public TmdbService(String option) {
+    public TmdbService(@NonNull Context context, Options option) {
+        super(context);
         this.option = option;
     }
 
+    @Nullable
     @Override
-    protected List<BaseMovie> doInBackground(String... voids) {
+    public List<BaseMovie> loadInBackground() {
         Tmdb tmdb = new Tmdb(API_KEY);
         Response<MovieResultsPage> response = null;
         switch (this.option) {
-            case "nowPlaying":
+            case NOW_PLAYING:
                 try {
                     response = tmdb.moviesService().nowPlaying(null, null, null).execute();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 break;
-            case "popular":
+            case POPULAR:
                 try {
                     response = tmdb.moviesService().popular(null, null, null).execute();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                break;
+            case UP_COMING:
+                try {
+                    response = tmdb.moviesService().upcoming(null, null, null).execute();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
         }
-        if (response.isSuccessful()) {
+        if (response != null && response.isSuccessful()) {
             return response.body().results;
-        } else {
+        } else if (response != null) {
             try {
                 Log.e("TMDbApiClient", response.errorBody().string());
             } catch (IOException e) {
@@ -53,9 +67,8 @@ public class TmdbService extends AsyncTask<String, Void, List<BaseMovie>> {
     }
 
     @Override
-    protected void onPostExecute(List<BaseMovie> movies) {
-        if (movies != null) {
-        }
+    protected void onStartLoading() {
+        super.onStartLoading();
+        forceLoad();
     }
 }
-

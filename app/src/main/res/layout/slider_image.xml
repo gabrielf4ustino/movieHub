@@ -23,7 +23,7 @@
         <TextView
             android:id="@+id/movieInfo"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:text="@string/slider_movie_info"
             android:textColor="#546E7A"
             android:textSize="24sp" />
