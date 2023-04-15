@@ -22,10 +22,13 @@ public class MovieCardAdapter extends RecyclerView.Adapter<MovieCardViewHolder> 
 
 
     private Context context;
-    private List<Movie> movies;
+    private List<BaseMovie> movies;
 
-
-    public MovieCardAdapter(Context context , List<Movie> movies){
+    public void setSearchMovies(List<BaseMovie> searchMovies){
+        this.movies = searchMovies;
+        notifyDataSetChanged();
+    }
+    public MovieCardAdapter(Context context , List<BaseMovie> movies){
         this.context = context;
         this.movies = movies;
     }
@@ -38,7 +41,7 @@ public class MovieCardAdapter extends RecyclerView.Adapter<MovieCardViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MovieCardViewHolder holder, int position) {
-        Movie movie = movies.get(position);
+        BaseMovie movie = movies.get(position);
 
         holder.setTitle(movie.original_title);
         holder.setOverview(movie.overview);
@@ -46,7 +49,7 @@ public class MovieCardAdapter extends RecyclerView.Adapter<MovieCardViewHolder> 
         Glide.with(context).load("https://image.tmdb.org/t/p/w500" + movies.get(position).poster_path).into(holder.getPosterImage());
 
     }
-    public void setMovies(List<Movie> movies) {
+    public void setMovies(List<BaseMovie> movies) {
         this.movies = movies;
         notifyDataSetChanged();
     }
@@ -61,8 +64,7 @@ public class MovieCardAdapter extends RecyclerView.Adapter<MovieCardViewHolder> 
         public TextView title, overview;
         public MovieHolder(@NonNull View itemView){
             super(itemView);
-
-            imageView = itemView.findViewById(R.id.imageView);
+                imageView = itemView.findViewById(R.id.imageView);
                 title = itemView.findViewById(R.id.title);
                 overview = itemView.findViewById(R.id.overview);
             }
