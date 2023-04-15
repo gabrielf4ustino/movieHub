@@ -23,7 +23,7 @@ import java.util.List;
 import br.com.ffscompany.awesomeapp.databinding.FragmentHomeBinding;
 import br.com.ffscompany.awesomeapp.service.Options;
 import br.com.ffscompany.awesomeapp.service.TmdbService;
-import br.com.ffscompany.awesomeapp.ui.home.recyclerView.RecyclerViewAdapter;
+import br.com.ffscompany.awesomeapp.ui.home.recyclerView.MovieViewAdapter;
 import br.com.ffscompany.awesomeapp.ui.home.slider.SliderViewAdapter;
 
 public class HomeFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<BaseMovie>> {
@@ -37,6 +37,8 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
         LoaderManager.getInstance(this).initLoader(0, null, this).forceLoad();
 
         LoaderManager.getInstance(this).initLoader(1, null, this).forceLoad();
+
+        LoaderManager.getInstance(this).initLoader(2, null, this).forceLoad();
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,11 +57,11 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
     public Loader<List<BaseMovie>> onCreateLoader(int id, @Nullable Bundle args) {
         switch (id) {
             case 0:
-                // Retorna um novo loader para carregar dados do tipo 1
-                return new TmdbService(requireContext(), Options.nowPlaying);
+                return new TmdbService(requireContext(), Options.NOW_PLAYING);
             case 1:
-                // Retorna um novo loader para carregar dados do tipo 2
-                return new TmdbService(requireContext(), Options.popular);
+                return new TmdbService(requireContext(), Options.POPULAR);
+            case 2:
+                return new TmdbService(requireContext(), Options.UP_COMING);
             default:
                 // Retorna null caso o ID seja inválido
                 return null;
@@ -80,19 +82,20 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
 
                     RecyclerView nowPlayingRecyclerView = binding.nowPlayingMovies;
                     nowPlayingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-                    nowPlayingRecyclerView.setAdapter(new RecyclerViewAdapter(getContext(), movies));
+                    nowPlayingRecyclerView.setAdapter(new MovieViewAdapter(getContext(), movies));
                 }
                 break;
             case 1:
                 if (movies != null) {
-                    RecyclerView popularMoviesRecyclerView = binding.popularMovies;
-                    popularMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-                    popularMoviesRecyclerView.setAdapter(new RecyclerViewAdapter(getContext(), movies));
-
                     RecyclerView nowPlayingRecyclerView = binding.gridMovies;
                     nowPlayingRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
-                    nowPlayingRecyclerView.setAdapter(new RecyclerViewAdapter(getContext(), movies));
+                    nowPlayingRecyclerView.setAdapter(new MovieViewAdapter(getContext(), movies));
                 }
+                break;
+            case 2:
+                RecyclerView popularMoviesRecyclerView = binding.upComingMovies;
+                popularMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+                popularMoviesRecyclerView.setAdapter(new MovieViewAdapter(getContext(), movies));
                 break;
         }
     }

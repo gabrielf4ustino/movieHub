@@ -55,7 +55,7 @@
             app:layout_constraintTop_toBottomOf="@+id/nowPlayingMovies" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/popularMovies"
+            android:id="@+id/up_coming_movies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -72,7 +72,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/popularMovies"></androidx.recyclerview.widget.RecyclerView>
+            app:layout_constraintTop_toBottomOf="@+id/up_coming_movies"></androidx.recyclerview.widget.RecyclerView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout> </ScrollView>

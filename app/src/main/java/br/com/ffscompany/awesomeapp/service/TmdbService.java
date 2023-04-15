@@ -32,16 +32,23 @@ public class TmdbService extends AsyncTaskLoader<List<BaseMovie>> {
         Tmdb tmdb = new Tmdb(API_KEY);
         Response<MovieResultsPage> response = null;
         switch (this.option) {
-            case nowPlaying:
+            case NOW_PLAYING:
                 try {
                     response = tmdb.moviesService().nowPlaying(null, null, null).execute();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 break;
-            case popular:
+            case POPULAR:
                 try {
                     response = tmdb.moviesService().popular(null, null, null).execute();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case UP_COMING:
+                try {
+                    response = tmdb.moviesService().upcoming(null, null, null).execute();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

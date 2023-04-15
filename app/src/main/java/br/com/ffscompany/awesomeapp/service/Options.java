@@ -1,6 +1,7 @@
 package br.com.ffscompany.awesomeapp.service;
 
 public enum Options {
-    nowPlaying,
-    popular
+    NOW_PLAYING,
+    POPULAR,
+    UP_COMING
 }
