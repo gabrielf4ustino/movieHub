@@ -17,12 +17,12 @@ import java.util.List;
 import br.com.ffscompany.awesomeapp.R;
 
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
+public class MovieViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
     private final Context context;
     private final List<BaseMovie> movies;
 
-    public RecyclerViewAdapter(Context context, List<BaseMovie> movies) {
+    public MovieViewAdapter(Context context, List<BaseMovie> movies) {
         this.context = context;
         this.movies = movies;
     }
@@ -51,6 +51,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
             public void onClick(View v) {
                 // Ação a ser executada quando a imagem for clicada
                 // Por exemplo, exibir uma mensagem de log ou abrir uma nova atividade
+                Log.d("CLICK", movies.get(position).original_title);
             }
         });
     }

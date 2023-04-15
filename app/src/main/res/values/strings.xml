@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">AwesomeApp</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_dashboard">Pesquisar</string>
     <string name="title_notifications">Notifications</string>
     <string name="em_cartaz">Em cartaz</string>
     <string name="populares">Populares</string>
