@@ -17,7 +17,7 @@ import java.util.List;
 import retrofit2.Response;
 
 public class TmdbService extends AsyncTaskLoader<List<BaseMovie>> {
-    private static final String API_KEY = "c7dd226ddb8f77f0536becda18f3c4fb";
+    private static final Tmdb tmdb = new Tmdb("c7dd226ddb8f77f0536becda18f3c4fb");
 
     private final Options option;
 
@@ -29,26 +29,25 @@ public class TmdbService extends AsyncTaskLoader<List<BaseMovie>> {
     @Nullable
     @Override
     public List<BaseMovie> loadInBackground() {
-        Tmdb tmdb = new Tmdb(API_KEY);
         Response<MovieResultsPage> response = null;
         switch (this.option) {
             case NOW_PLAYING:
                 try {
-                    response = tmdb.moviesService().nowPlaying(null, null, null).execute();
+                    response = tmdb.moviesService().nowPlaying(null, "pt-BR", "BR").execute();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 break;
             case POPULAR:
                 try {
-                    response = tmdb.moviesService().popular(null, null, null).execute();
+                    response = tmdb.moviesService().popular(null, "pt-BR", "BR").execute();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 break;
             case UP_COMING:
                 try {
-                    response = tmdb.moviesService().upcoming(null, null, null).execute();
+                    response = tmdb.moviesService().upcoming(null, "pt-BR", "BR").execute();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

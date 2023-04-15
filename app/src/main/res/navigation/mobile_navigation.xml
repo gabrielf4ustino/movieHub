@@ -19,7 +19,11 @@
         android:id="@+id/navigation_search"
         android:name="br.com.ffscompany.awesomeapp.ui.search.SearchFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_navigation_search_to_navigation_movie_details"
+            app:destination="@id/navigation_movie_details" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"

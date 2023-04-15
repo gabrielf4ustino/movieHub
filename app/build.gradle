@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace 'br.com.ffscompany.awesomeapp'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "br.com.ffscompany.awesomeapp"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -55,4 +55,7 @@ dependencies {
 
     // https://mvnrepository.com/artifact/com.uwetrottmann.tmdb2/tmdb-java
     implementation group: 'com.uwetrottmann.tmdb2', name: 'tmdb-java', version: '2.8.1'
+
+    implementation 'com.google.android.exoplayer:exoplayer:2.18.5'
+    implementation 'com.github.HaarigerHarald:android-youtubeExtractor:v2.1.0'
 }
