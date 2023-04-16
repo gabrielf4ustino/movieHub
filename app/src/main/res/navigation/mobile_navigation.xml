@@ -26,12 +26,12 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_genres"
         android:name="br.com.ffscompany.awesomeapp.ui.genres.GenresFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_genres" >
         <action
-            android:id="@+id/action_navigation_notifications_to_navigation_movie_details"
+            android:id="@+id/action_navigation_genres_to_navigation_movie_details"
             app:destination="@id/navigation_movie_details" />
     </fragment>
 
@@ -47,6 +47,6 @@
             app:destination="@id/navigation_search" />
         <action
             android:id="@+id/action_navigation_movie_details_to_navigation_notifications"
-            app:destination="@id/navigation_notifications" />
+            app:destination="@id/navigation_genres" />
     </fragment>
 </navigation>

@@ -2,36 +2,32 @@
     <string name="app_name">AwesomeApp</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Pesquisar</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_notifications">Gêneros</string>
     <string name="now_playing">Em cartaz</string>
     <string name="up_coming">Em breve</string>
     <string name="slider_description">Filme destaque</string>
     <string name="popular">Populares</string>
 
-    <string-array name="generos">
-        <item>Ação</item>
-        <item>Aventura</item>
-        <item>Animação</item>
-        <item>Comédia</item>
-        <item>Crime</item>
-        <item>Documentário</item>
-        <item>Drama</item>
-        <item>Família</item>
-        <item>Fantasia</item>
-        <item>História</item>
-        <item>Terror</item>
-        <item>Música</item>
-        <item>Mistério</item>
-        <item>Romance</item>
-        <item>Ficção Cientifica</item>
-        <item>Cinema TV</item>
-        <item>Suspense</item>
-        <item>Guerra</item>
-        <item>Faroeste</item>
+    <string-array name="genres">
+        <item>28:Ação</item>
+        <item>12:Aventura</item>
+        <item>16:Animação</item>
+        <item>35:Comédia</item>
+        <item>80:Crime</item>
+        <item>99:Documentário</item>
+        <item>18:Drama</item>
+        <item>10751:Família</item>
+        <item>14:Fantasia</item>
+        <item>36:História</item>
+        <item>27:Terror</item>
+        <item>10402:Música</item>
+        <item>9648:Mistério</item>
+        <item>10749:Romance</item>
+        <item>878:Ficção Cientifica</item>
+        <item>10770:Cinema TV</item>
+        <item>53:Suspense</item>
+        <item>10752:Guerra</item>
+        <item>37:Faroeste</item>
 
     </string-array>
-
-
-
-
 </resources>

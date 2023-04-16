@@ -1,13 +1,13 @@
 package br.com.ffscompany.awesomeapp.ui.movieDetails;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -90,12 +90,31 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
 
     @Override
     public void onLoadFinished(@NonNull Loader<String> loader, String data) {
-        Log.d("DATA", data);
         WebView webView = binding.playerView;
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadData("<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/" + data + "\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; fullscreen;\"></iframe>\n", "text/html", "utf-8");
-        webView.getSettings().setPluginState(WebSettings.PluginState.ON);
+//        webView.getSettings().setJavaScriptEnabled(true);
+//        webView.loadUrl("<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/" + data + "\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; fullscreen;\"></iframe>\n", "text/html", "utf-8");
+//        webView.getSettings().setPluginState(WebSettings.PluginState.ON);
+//        webView.setWebChromeClient(new WebChromeClient());
+
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setMediaPlaybackRequiresUserGesture(false);
+        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+
+        String videoUrl = "https://www.youtube.com/embed/" + data;
+        String html = "<html>\n" +
+                "  <body style=\"margin:0;padding:0;\">\n" +
+                "    <iframe width=\"100%\" height=\"100%\" src=\"" + videoUrl + "\" frameborder=\"0\"></iframe>\n" +
+                "  </body>\n" +
+                "</html>\n";
+
+        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+
         webView.setWebChromeClient(new WebChromeClient());
+        webView.setWebViewClient(new WebViewClient());
+
+        webView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null);
+
     }
 
     @Override
