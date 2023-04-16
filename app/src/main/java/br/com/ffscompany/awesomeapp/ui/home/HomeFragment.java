@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
@@ -20,6 +21,7 @@ import com.uwetrottmann.tmdb2.entities.BaseMovie;
 
 import java.util.List;
 
+import br.com.ffscompany.awesomeapp.R;
 import br.com.ffscompany.awesomeapp.databinding.FragmentHomeBinding;
 import br.com.ffscompany.awesomeapp.service.Options;
 import br.com.ffscompany.awesomeapp.service.TmdbService;
@@ -76,26 +78,37 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
                     RecyclerView slider = binding.slider;
                     slider.setOnFlingListener(null);
                     slider.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-                    slider.setAdapter(new SliderViewAdapter(getContext(), movies));
+                    slider.setAdapter(new SliderViewAdapter(getContext(), movies, movie -> {
+                        Bundle args = new Bundle();
+                        args.putInt("id", movie.id);
+                        args.putString("title", movie.title);
+                        args.putString("overview", movie.overview);
+
+                        assert getParentFragment() != null;
+                        NavHostFragment.findNavController(getParentFragment()).navigate(
+                                R.id.action_navigation_home_to_navigation_movie_details,
+                                args
+                        );
+                    }));
                     SnapHelper snapHelper = new LinearSnapHelper();
                     snapHelper.attachToRecyclerView(slider);
 
-                    RecyclerView nowPlayingRecyclerView = binding.nowPlayingMovies;
-                    nowPlayingRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-                    nowPlayingRecyclerView.setAdapter(new MovieViewAdapter(getContext(), movies));
+                    RecyclerView nowPlayingMovies = binding.nowPlayingMovies;
+                    nowPlayingMovies.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+                    nowPlayingMovies.setAdapter(new MovieViewAdapter(getContext(), getParentFragment(), movies));
                 }
                 break;
             case 1:
                 if (movies != null) {
-                    RecyclerView nowPlayingRecyclerView = binding.gridMovies;
-                    nowPlayingRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
-                    nowPlayingRecyclerView.setAdapter(new MovieViewAdapter(getContext(), movies));
+                    RecyclerView gridMovies = binding.gridMovies;
+                    gridMovies.setLayoutManager(new GridLayoutManager(getContext(), 4));
+                    gridMovies.setAdapter(new MovieViewAdapter(getContext(), getParentFragment(), movies));
                 }
                 break;
             case 2:
-                RecyclerView popularMoviesRecyclerView = binding.upComingMovies;
-                popularMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-                popularMoviesRecyclerView.setAdapter(new MovieViewAdapter(getContext(), movies));
+                RecyclerView upComingMovies = binding.upComingMovies;
+                upComingMovies.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+                upComingMovies.setAdapter(new MovieViewAdapter(getContext(), getParentFragment(), movies));
                 break;
         }
     }
@@ -104,5 +117,4 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
     public void onLoaderReset(@NonNull Loader<List<BaseMovie>> loader) {
         loader.reset();
     }
-
 }

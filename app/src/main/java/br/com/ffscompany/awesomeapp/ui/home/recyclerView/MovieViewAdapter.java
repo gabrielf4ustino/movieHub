@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -20,44 +21,38 @@ import br.com.ffscompany.awesomeapp.R;
 public class MovieViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
     private final Context context;
+
+    private final Fragment fragment;
+
     private final List<BaseMovie> movies;
 
-    public MovieViewAdapter(Context context, List<BaseMovie> movies) {
+    public MovieViewAdapter(Context context,@NonNull Fragment fragment, List<BaseMovie> movies) {
         this.context = context;
         this.movies = movies;
+        this.fragment = fragment;
     }
 
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.single_image, parent, false);
-        return new MovieViewHolder(view);
+        return new MovieViewHolder(view, fragment);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-        // Obtenha o objeto de dados para esta posição
 
-        // Defina o texto e outras propriedades do ViewHolder
-//        holder.textView.setText(dataObject.getText());
-//        Log.d("movie", movies.get(position).toString());
-
-        // Carregue a imagem usando o Glide
         Glide.with(context).load("https://image.tmdb.org/t/p/w500" + movies.get(position).poster_path).into(holder.getImageView());
 
-        // Defina um ouvinte de clique na imagem
-        holder.getImageView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Ação a ser executada quando a imagem for clicada
-                // Por exemplo, exibir uma mensagem de log ou abrir uma nova atividade
-                Log.d("CLICK", movies.get(position).original_title);
-            }
-        });
+        holder.onItemClick(movies.get(position));
     }
 
     @Override
     public int getItemCount() {
         return movies.size();
+    }
+
+    public interface OnClickItemListener {
+        void onItemClick(BaseMovie movie);
     }
 }
