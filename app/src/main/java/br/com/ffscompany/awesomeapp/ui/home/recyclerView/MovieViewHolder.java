@@ -19,30 +19,16 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MovieViewHolder extends RecyclerView.ViewHolder implements SliderViewAdapter.OnItemClickListener {
+public class MovieViewHolder extends RecyclerView.ViewHolder{
 
     private ImageView imageView;
 
-    private Fragment fragment;
-
-    public MovieViewHolder(@NonNull View itemView, @NonNull Fragment fragment) {
+    public MovieViewHolder(@NonNull View itemView) {
         super(itemView);
         imageView = itemView.findViewById(R.id.movieImage);
-        this.fragment = fragment;
     }
 
     public ImageView getImageView() {
         return imageView;
-    }
-
-    @Override
-    public void onItemClick(BaseMovie movie) {
-        Bundle args = new Bundle();
-        args.putString("data", "item.getData()");
-
-//        NavHostFragment.findNavController(fragment).navigate(
-//                R.id.action_navigation_home_to_navigation_movie_details,
-//                args
-//        );
     }
 }

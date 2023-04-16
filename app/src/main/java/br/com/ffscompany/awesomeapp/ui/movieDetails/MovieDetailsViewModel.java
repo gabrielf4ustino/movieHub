@@ -1,12 +1,8 @@
 package br.com.ffscompany.awesomeapp.ui.movieDetails;
 
-import android.widget.VideoView;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import com.uwetrottmann.tmdb2.entities.Videos;
 
 public class MovieDetailsViewModel extends ViewModel {
 
@@ -14,11 +10,22 @@ public class MovieDetailsViewModel extends ViewModel {
 
     private final MutableLiveData<String> overview;
 
-    public MovieDetailsViewModel(String title, String overview) {
+    private final MutableLiveData<String> rating;
+
+    private final MutableLiveData<String> releaseDate;
+
+    public MovieDetailsViewModel(String title, String overview, String rating, String releaseDate) {
         this.title = new MutableLiveData<>();
         this.title.setValue(title);
+
         this.overview = new MutableLiveData<>();
         this.overview.setValue(overview);
+
+        this.rating = new MutableLiveData<>();
+        this.rating.setValue(rating);
+
+        this.releaseDate = new MutableLiveData<>();
+        this.releaseDate.setValue(releaseDate);
     }
 
     public LiveData<String> getTitle() {
@@ -27,5 +34,13 @@ public class MovieDetailsViewModel extends ViewModel {
 
     public LiveData<String> getOverview() {
         return overview;
+    }
+
+    public LiveData<String> getRating() {
+        return rating;
+    }
+
+    public LiveData<String> getReleaseDate() {
+        return releaseDate;
     }
 }

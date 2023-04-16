@@ -33,11 +33,14 @@ public class VideoTmdbService extends AsyncTaskLoader<String> {
             if (response != null && response.isSuccessful()) {
                 List<Videos.Video> videos = response.body().results;
                 for (Videos.Video video : videos) {
+                    assert video.type != null;
                     if (video.type.equals("Trailer") && video.site.equals("YouTube")) {
-                        return "http://www.youtube.com/embed/" + video.key + "?autoplay=1&vq=small";
+                        return video.key;
                     }
                 }
-                return "https://www.youtube.com/watch?v=" + videos.get(0).key;
+                if (videos.get(0).key != null)
+                    return videos.get(0).key;
+                return "";
             } else {
                 try {
                     Log.e("TMDbApiClient", response.errorBody().string());

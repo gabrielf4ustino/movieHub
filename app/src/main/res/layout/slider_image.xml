@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardUseCompatPadding="true">
 
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/movie_image_slider"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:contentDescription="@string/slider_description"
+        android:importantForAccessibility="auto"
+        android:scaleType="centerCrop"
+        android:foreground="@drawable/gradient_bg"
+        tools:ignore="ImageContrastCheck" />
 
-        <ImageView
-            android:id="@+id/movieImageSlider"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/slider_description"
-            android:importantForAccessibility="auto"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_launcher_round"
-            tools:ignore="ImageContrastCheck" />
 
-        <TextView
-            android:id="@+id/movieInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:text="@string/slider_movie_info"
-            android:textColor="#546E7A"
-            android:textSize="24sp" />
-    </RelativeLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/movie_title_slider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="24sp"
+        android:padding="10dp" />
+
+</RelativeLayout>
