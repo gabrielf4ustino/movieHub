@@ -11,6 +11,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -21,6 +22,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
@@ -35,6 +39,7 @@ import com.google.android.exoplayer2.util.Util;
 import at.huber.youtubeExtractor.VideoMeta;
 import at.huber.youtubeExtractor.YouTubeExtractor;
 import at.huber.youtubeExtractor.YtFile;
+import br.com.ffscompany.awesomeapp.R;
 import br.com.ffscompany.awesomeapp.databinding.FragmentMovieDetailsBinding;
 import br.com.ffscompany.awesomeapp.service.VideoTmdbService;
 
@@ -48,14 +53,19 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
 
     private SimpleExoPlayer player;
 
+    private View navHost;
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.navHost = requireActivity().findViewById(R.id.nav_view);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Bundle bundle = getArguments();
+        navHost.setVisibility(View.GONE);
 
         movieDetailsViewModel = new ViewModelProvider(this, new ViewModelFactory(bundle.getString("title"), bundle.getString("overview"))).get(MovieDetailsViewModel.class);
 
@@ -70,6 +80,12 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
 
         LoaderManager.getInstance(this).initLoader(bundle.getInt("id"), null, this).forceLoad();
 
+        Button goback = binding.goback;
+        goback.setOnClickListener(view -> {
+            NavController navController = NavHostFragment.findNavController(getParentFragment());
+            navController.popBackStack();
+        });
+
         return root;
     }
 
@@ -77,6 +93,7 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        navHost.setVisibility(View.VISIBLE);
     }
 
     @NonNull

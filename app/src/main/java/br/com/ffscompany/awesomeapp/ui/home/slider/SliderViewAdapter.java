@@ -31,6 +31,7 @@ import br.com.ffscompany.awesomeapp.ui.movieDetails.MovieDetailsFragment;
 public class SliderViewAdapter extends RecyclerView.Adapter<SliderViewHolder> {
 
     private final Context context;
+
     private final List<BaseMovie> movies;
 
     private OnItemClickListener listener;
@@ -51,7 +52,7 @@ public class SliderViewAdapter extends RecyclerView.Adapter<SliderViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull SliderViewHolder holder, int position) {
 
-        Glide.with(context).load("https://image.tmdb.org/t/p/w500" + movies.get(position).poster_path).into(holder.getImageView());
+        Glide.with(context).load("https://image.tmdb.org/t/p/w500" + movies.get(position).backdrop_path).into(holder.getImageView());
 
         holder.getImageView().setOnClickListener(v -> listener.onItemClick(movies.get(position)));
     }

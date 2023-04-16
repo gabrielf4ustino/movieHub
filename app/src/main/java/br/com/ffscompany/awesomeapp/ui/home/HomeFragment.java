@@ -78,39 +78,38 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
                     RecyclerView slider = binding.slider;
                     slider.setOnFlingListener(null);
                     slider.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-                    slider.setAdapter(new SliderViewAdapter(getContext(), movies, movie -> {
-                        Bundle args = new Bundle();
-                        args.putInt("id", movie.id);
-                        args.putString("title", movie.title);
-                        args.putString("overview", movie.overview);
-
-                        assert getParentFragment() != null;
-                        NavHostFragment.findNavController(getParentFragment()).navigate(
-                                R.id.action_navigation_home_to_navigation_movie_details,
-                                args
-                        );
-                    }));
+                    slider.setAdapter(new SliderViewAdapter(getContext(), movies, movie -> {navigate(movie, R.id.action_navigation_home_to_navigation_movie_details);}));
                     SnapHelper snapHelper = new LinearSnapHelper();
                     snapHelper.attachToRecyclerView(slider);
 
                     RecyclerView nowPlayingMovies = binding.nowPlayingMovies;
                     nowPlayingMovies.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-                    nowPlayingMovies.setAdapter(new MovieViewAdapter(getContext(), getParentFragment(), movies));
+                    nowPlayingMovies.setAdapter(new MovieViewAdapter(getContext(), movies, movie -> navigate(movie, R.id.action_navigation_home_to_navigation_movie_details)));
                 }
                 break;
             case 1:
                 if (movies != null) {
                     RecyclerView gridMovies = binding.gridMovies;
                     gridMovies.setLayoutManager(new GridLayoutManager(getContext(), 4));
-                    gridMovies.setAdapter(new MovieViewAdapter(getContext(), getParentFragment(), movies));
+                    gridMovies.setAdapter(new MovieViewAdapter(getContext(), movies, movie -> navigate(movie, R.id.action_navigation_home_to_navigation_movie_details)));
                 }
                 break;
             case 2:
                 RecyclerView upComingMovies = binding.upComingMovies;
                 upComingMovies.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-                upComingMovies.setAdapter(new MovieViewAdapter(getContext(), getParentFragment(), movies));
+                upComingMovies.setAdapter(new MovieViewAdapter(getContext(), movies, movie -> navigate(movie, R.id.action_navigation_home_to_navigation_movie_details)));
                 break;
         }
+    }
+
+    private void navigate(BaseMovie movie, int id) {
+        Bundle args = new Bundle();
+        args.putInt("id", movie.id);
+        args.putString("title", movie.title);
+        args.putString("overview", movie.overview);
+
+        assert getParentFragment() != null;
+        NavHostFragment.findNavController(getParentFragment()).navigate(id, args);
     }
 
     @Override

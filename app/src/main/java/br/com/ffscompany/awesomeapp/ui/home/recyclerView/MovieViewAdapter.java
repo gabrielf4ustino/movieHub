@@ -16,27 +16,28 @@ import com.uwetrottmann.tmdb2.entities.BaseMovie;
 import java.util.List;
 
 import br.com.ffscompany.awesomeapp.R;
+import br.com.ffscompany.awesomeapp.ui.home.slider.SliderViewAdapter;
 
 
 public class MovieViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
     private final Context context;
 
-    private final Fragment fragment;
-
     private final List<BaseMovie> movies;
 
-    public MovieViewAdapter(Context context,@NonNull Fragment fragment, List<BaseMovie> movies) {
+    private OnItemClickListener listener;
+
+    public MovieViewAdapter(Context context, List<BaseMovie> movies, OnItemClickListener listener) {
         this.context = context;
         this.movies = movies;
-        this.fragment = fragment;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.single_image, parent, false);
-        return new MovieViewHolder(view, fragment);
+        return new MovieViewHolder(view);
     }
 
     @Override
@@ -44,7 +45,7 @@ public class MovieViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
 
         Glide.with(context).load("https://image.tmdb.org/t/p/w500" + movies.get(position).poster_path).into(holder.getImageView());
 
-        holder.onItemClick(movies.get(position));
+        holder.getImageView().setOnClickListener(v -> listener.onItemClick(movies.get(position)));
     }
 
     @Override
@@ -52,7 +53,7 @@ public class MovieViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {
         return movies.size();
     }
 
-    public interface OnClickItemListener {
+    public interface OnItemClickListener {
         void onItemClick(BaseMovie movie);
     }
 }

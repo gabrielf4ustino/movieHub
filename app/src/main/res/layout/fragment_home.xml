@@ -20,12 +20,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/nowPlayingText"
+            android:id="@+id/now_playing_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="10dp"
             android:paddingTop="20dp"
-            android:text="@string/em_cartaz"
+            android:text="@string/now_playing"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,27 +33,28 @@
             app:layout_constraintTop_toBottomOf="@+id/slider" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/nowPlayingMovies"
+            android:id="@+id/now_playing_movies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nowPlayingText" />
+            app:layout_constraintTop_toBottomOf="@+id/now_playing_text" />
 
         <TextView
-            android:id="@+id/popularText"
+            android:id="@+id/up_coming"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:paddingTop="5dp"
-            android:text="@string/populares"
+            android:text="@string/up_coming"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nowPlayingMovies" />
+            app:layout_constraintTop_toBottomOf="@+id/now_playing_movies" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/up_coming_movies"
@@ -63,17 +64,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/popularText" />
+            app:layout_constraintTop_toBottomOf="@+id/up_coming" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/gridMovies"
+            android:id="@+id/grid_movies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/up_coming_movies"></androidx.recyclerview.widget.RecyclerView>
+            app:layout_constraintTop_toBottomOf="@+id/up_coming_movies" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout> </ScrollView>

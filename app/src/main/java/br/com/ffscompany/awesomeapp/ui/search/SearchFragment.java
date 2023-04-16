@@ -1,54 +1,41 @@
 package br.com.ffscompany.awesomeapp.ui.search;
 
 import android.os.Bundle;
-import android.text.Layout;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.uwetrottmann.tmdb2.entities.BaseMovie;
-import com.uwetrottmann.tmdb2.entities.Movie;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import br.com.ffscompany.awesomeapp.R;
-import br.com.ffscompany.awesomeapp.databinding.FragmentHomeBinding;
 import br.com.ffscompany.awesomeapp.databinding.FragmentSearchBinding;
 import br.com.ffscompany.awesomeapp.service.Options;
 import br.com.ffscompany.awesomeapp.service.TmdbService;
+import br.com.ffscompany.awesomeapp.ui.home.recyclerView.MovieViewAdapter;
 import br.com.ffscompany.awesomeapp.ui.search.card.MovieCardAdapter;
-import retrofit2.Retrofit;
-import retrofit2.Call;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
-import retrofit2.converter.gson.GsonConverterFactory;
 
-public class SearchFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<BaseMovie>>{
+public class SearchFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<BaseMovie>> {
 
     private FragmentSearchBinding binding;
+
+    private boolean isToastShown = false;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,11 +43,11 @@ public class SearchFragment extends Fragment implements LoaderManager.LoaderCall
         LoaderManager.getInstance(this).initLoader(0, null, this).forceLoad();
     }
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSearchBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -75,10 +62,22 @@ public class SearchFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void onLoadFinished(@NonNull Loader<List<BaseMovie>> loader, List<BaseMovie> movies) {
-        RecyclerView recycler = binding.recyclerView;
-        recycler.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL,false));
-        recycler.setAdapter(new MovieCardAdapter(getContext(), movies));
+        RecyclerView moviesRecycler = binding.recyclerView;
+        moviesRecycler.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+
+        moviesRecycler.setAdapter(new MovieCardAdapter(getContext(), movies, movie -> {
+
+            Bundle args = new Bundle();
+            args.putInt("id", movie.id);
+            args.putString("title", movie.title);
+            args.putString("overview", movie.overview);
+
+            assert getParentFragment() != null;
+            NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_navigation_search_to_navigation_movie_details, args);
+        }));
+
         SearchView search = binding.searchView;
+
         search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -86,33 +85,39 @@ public class SearchFragment extends Fragment implements LoaderManager.LoaderCall
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                MovieCardAdapter adapter = (MovieCardAdapter) recycler.getAdapter();
-                adapter.setMovies(searchMovies(newText,movies));
-                adapter.notifyDataSetChanged();
+            public boolean onQueryTextChange(String searchText) {
+                MovieCardAdapter adapter = (MovieCardAdapter) moviesRecycler.getAdapter();
+                assert adapter != null;
+                List<BaseMovie> movieSearch = searchMovies(searchText, movies);
+                adapter.setMovies(movieSearch);
                 return true;
             }
         });
     }
-    @Override
-    public void onLoaderReset(@NonNull Loader<List<BaseMovie>> loader) {
-        loader.reset();
-    }
-    private List<BaseMovie> searchMovies(String text, List<BaseMovie> movies)
-    {
+
+    private List<BaseMovie> searchMovies(String text, List<BaseMovie> movies) {
         List<BaseMovie> movieSearch = new ArrayList<>();
 
-        for(BaseMovie movie : movies){
-            if(movie.original_title.toLowerCase().contains(text.toLowerCase())){
+        for (BaseMovie movie : movies) {
+            assert movie.title != null;
+            if (movie.title.toLowerCase().contains(text.toLowerCase()) || movie.original_title.toLowerCase().contains(text.toLowerCase())) {
                 movieSearch.add(movie);
             }
         }
-        if(movieSearch.isEmpty()){
-            Toast.makeText(getActivity(), "No movies found", Toast.LENGTH_SHORT).show();
+        if (movieSearch.isEmpty() && !isToastShown) {
+            Toast toast = Toast.makeText(getContext(), "Não encontrado", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
+            toast.show();
+            isToastShown = true;
+            return new ArrayList<>();
+        } else {
+            isToastShown = false;
             return movieSearch;
         }
-        else{
-            return movieSearch;
-        }
+    }
+
+    @Override
+    public void onLoaderReset(@NonNull Loader<List<BaseMovie>> loader) {
+        loader.reset();
     }
 }
