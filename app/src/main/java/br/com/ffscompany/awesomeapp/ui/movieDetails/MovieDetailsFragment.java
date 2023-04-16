@@ -65,7 +65,7 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
 
         final TextView movieTitle = binding.movieTitle;
         movieDetailsViewModel.getTitle().observe(getViewLifecycleOwner(), movieTitle::setText);
-        final TextView movieSynopsis = binding.movieSynopsis;
+        final TextView movieSynopsis = binding.movieOverview;
         movieDetailsViewModel.getOverview().observe(getViewLifecycleOwner(), movieSynopsis::setText);
 
         LoaderManager.getInstance(this).initLoader(bundle.getInt("id"), null, this).forceLoad();
