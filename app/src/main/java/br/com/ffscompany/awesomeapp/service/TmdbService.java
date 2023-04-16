@@ -22,12 +22,9 @@ public class TmdbService extends AsyncTaskLoader<List<BaseMovie>> {
 
     private final Options option;
 
-    private final Integer genreId;
-
-    public TmdbService(@NonNull Context context, Options option, int genreId) {
+    public TmdbService(@NonNull Context context, Options option) {
         super(context);
         this.option = option;
-        this.genreId = genreId;
     }
 
     @Nullable
@@ -55,14 +52,6 @@ public class TmdbService extends AsyncTaskLoader<List<BaseMovie>> {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            case GENRE:
-                try {
-                    assert genreId != 1;
-                    response = tmdb.genreService().movies(genreId, "pt-BR", true, SortBy.POPULARITY_DESC).execute();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                break;
         }
         if (response != null && response.isSuccessful()) {
             return response.body().results;

@@ -61,11 +61,11 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
     public Loader<List<BaseMovie>> onCreateLoader(int id, @Nullable Bundle args) {
         switch (id) {
             case 0:
-                return new TmdbService(requireContext(), Options.NOW_PLAYING, 0);
+                return new TmdbService(requireContext(), Options.NOW_PLAYING);
             case 1:
-                return new TmdbService(requireContext(), Options.POPULAR, 0);
+                return new TmdbService(requireContext(), Options.POPULAR);
             case 2:
-                return new TmdbService(requireContext(), Options.UP_COMING, 0);
+                return new TmdbService(requireContext(), Options.UP_COMING);
             default:
                 // Retorna null caso o ID seja inválido
                 return null;
