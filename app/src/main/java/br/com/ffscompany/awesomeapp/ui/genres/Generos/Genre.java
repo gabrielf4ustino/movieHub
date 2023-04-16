@@ -1,8 +1,9 @@
-package br.com.ffscompany.awesomeapp.ui.notifications.Generos;
+package br.com.ffscompany.awesomeapp.ui.genres.Generos;
 
 
 import android.content.Context;
 import android.content.res.Resources;
+
 import br.com.ffscompany.awesomeapp.R;
 
 public class Genre {

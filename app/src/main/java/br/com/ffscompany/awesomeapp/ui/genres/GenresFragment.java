@@ -1,43 +1,35 @@
-package br.com.ffscompany.awesomeapp.ui.notifications;
+package br.com.ffscompany.awesomeapp.ui.genres;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.navigation.NavigationBarView;
 import com.uwetrottmann.tmdb2.entities.BaseMovie;
 import com.uwetrottmann.tmdb2.entities.Genre;
 
 import java.util.List;
 
 import br.com.ffscompany.awesomeapp.R;
-import br.com.ffscompany.awesomeapp.databinding.FragmentNotificationsBinding;
-import br.com.ffscompany.awesomeapp.service.Options;
-import br.com.ffscompany.awesomeapp.service.TmdbService;
-import br.com.ffscompany.awesomeapp.ui.search.card.MovieCardAdapter;
+import br.com.ffscompany.awesomeapp.databinding.FragmentGenresBinding;
 
-public class NotificationsFragment extends Fragment  implements LoaderManager.LoaderCallbacks<List<BaseMovie>>{
+public class GenresFragment extends Fragment  implements LoaderManager.LoaderCallbacks<List<BaseMovie>>{
 
-    private FragmentNotificationsBinding binding;
+    private FragmentGenresBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = FragmentGenresBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         Spinner spinner = binding.genSpinner;

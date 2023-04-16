@@ -1,13 +1,11 @@
 package br.com.ffscompany.awesomeapp.ui.home.recyclerView;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -16,7 +14,6 @@ import com.uwetrottmann.tmdb2.entities.BaseMovie;
 import java.util.List;
 
 import br.com.ffscompany.awesomeapp.R;
-import br.com.ffscompany.awesomeapp.ui.home.slider.SliderViewAdapter;
 
 
 public class MovieViewAdapter extends RecyclerView.Adapter<MovieViewHolder> {

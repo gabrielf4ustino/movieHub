@@ -10,7 +10,6 @@ import androidx.loader.content.AsyncTaskLoader;
 import com.uwetrottmann.tmdb2.Tmdb;
 import com.uwetrottmann.tmdb2.entities.BaseMovie;
 import com.uwetrottmann.tmdb2.entities.MovieResultsPage;
-import com.uwetrottmann.tmdb2.enumerations.SortBy;
 
 import java.io.IOException;
 import java.util.List;
