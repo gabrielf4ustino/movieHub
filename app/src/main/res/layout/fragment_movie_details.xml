@@ -27,15 +27,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.exoplayer2.ui.PlayerView
+    <WebView
         android:id="@+id/player_view"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/goback"
-        app:resize_mode="fit" />
+        android:padding="0dp"/>
 
     <TextView
         android:id="@+id/movie_title"

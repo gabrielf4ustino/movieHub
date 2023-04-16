@@ -10,6 +10,7 @@ import androidx.loader.content.AsyncTaskLoader;
 import com.uwetrottmann.tmdb2.Tmdb;
 import com.uwetrottmann.tmdb2.entities.BaseMovie;
 import com.uwetrottmann.tmdb2.entities.MovieResultsPage;
+import com.uwetrottmann.tmdb2.enumerations.SortBy;
 
 import java.io.IOException;
 import java.util.List;
@@ -21,9 +22,12 @@ public class TmdbService extends AsyncTaskLoader<List<BaseMovie>> {
 
     private final Options option;
 
-    public TmdbService(@NonNull Context context, Options option) {
+    private final Integer genreId;
+
+    public TmdbService(@NonNull Context context, Options option, int genreId) {
         super(context);
         this.option = option;
+        this.genreId = genreId;
     }
 
     @Nullable
@@ -48,6 +52,13 @@ public class TmdbService extends AsyncTaskLoader<List<BaseMovie>> {
             case UP_COMING:
                 try {
                     response = tmdb.moviesService().upcoming(null, "pt-BR", "BR").execute();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            case GENRE:
+                try {
+                    assert genreId != null;
+                    response = tmdb.genreService().movies(genreId, "pt-BR", true, SortBy.POPULARITY_DESC).execute();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

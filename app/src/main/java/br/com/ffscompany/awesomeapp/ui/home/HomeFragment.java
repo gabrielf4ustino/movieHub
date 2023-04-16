@@ -2,7 +2,6 @@ package br.com.ffscompany.awesomeapp.ui.home;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,7 +22,6 @@ import com.uwetrottmann.tmdb2.entities.BaseMovie;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import br.com.ffscompany.awesomeapp.R;
 import br.com.ffscompany.awesomeapp.databinding.FragmentHomeBinding;
@@ -64,11 +61,11 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
     public Loader<List<BaseMovie>> onCreateLoader(int id, @Nullable Bundle args) {
         switch (id) {
             case 0:
-                return new TmdbService(requireContext(), Options.NOW_PLAYING);
+                return new TmdbService(requireContext(), Options.NOW_PLAYING, movieId);
             case 1:
-                return new TmdbService(requireContext(), Options.POPULAR);
+                return new TmdbService(requireContext(), Options.POPULAR, movieId);
             case 2:
-                return new TmdbService(requireContext(), Options.UP_COMING);
+                return new TmdbService(requireContext(), Options.UP_COMING, movieId);
             default:
                 // Retorna null caso o ID seja inválido
                 return null;
