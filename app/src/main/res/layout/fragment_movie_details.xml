@@ -41,10 +41,12 @@
         android:id="@+id/movie_title"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:paddingStart="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:paddingTop="30dp"
         android:paddingEnd="10dp"
         android:textSize="22sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +55,7 @@
     <TextView
         android:id="@+id/movie_overview"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:padding="20dp"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,14 +65,25 @@
     <TextView
         android:id="@+id/movie_rating"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:padding="20dp"
+        android:layout_height="wrap_content"
         android:textSize="15sp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/movie_overview"
-        android:text="Imdb "
-        app:drawableLeftCompat="@android:drawable/btn_star_big_on" />
+        app:layout_constraintTop_toBottomOf="@+id/movie_overview" />
 
+    <TextView
+        android:id="@+id/movie_release_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/movie_rating" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,7 +37,7 @@ public class VideoTmdbService extends AsyncTaskLoader<String> {
                         return "http://www.youtube.com/embed/" + video.key + "?autoplay=1&vq=small";
                     }
                 }
-                return "https://www.youtube.com/watch?v=" + videos.get(0).key;
+                return "";
             } else {
                 try {
                     Log.e("TMDbApiClient", response.errorBody().string());

@@ -53,7 +53,7 @@ public class SliderViewAdapter extends RecyclerView.Adapter<SliderViewHolder> {
     public void onBindViewHolder(@NonNull SliderViewHolder holder, int position) {
 
         Glide.with(context).load("https://image.tmdb.org/t/p/w500" + movies.get(position).backdrop_path).into(holder.getImageView());
-
+        holder.setTitle(movies.get(position).title);
         holder.getImageView().setOnClickListener(v -> listener.onItemClick(movies.get(position)));
     }
 

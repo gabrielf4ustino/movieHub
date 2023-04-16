@@ -1,6 +1,8 @@
 package br.com.ffscompany.awesomeapp.ui.home;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +21,10 @@ import androidx.recyclerview.widget.SnapHelper;
 
 import com.uwetrottmann.tmdb2.entities.BaseMovie;
 
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import br.com.ffscompany.awesomeapp.R;
 import br.com.ffscompany.awesomeapp.databinding.FragmentHomeBinding;
@@ -78,7 +83,9 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
                     RecyclerView slider = binding.slider;
                     slider.setOnFlingListener(null);
                     slider.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-                    slider.setAdapter(new SliderViewAdapter(getContext(), movies, movie -> {navigate(movie, R.id.action_navigation_home_to_navigation_movie_details);}));
+                    slider.setAdapter(new SliderViewAdapter(getContext(), movies, movie -> {
+                        navigate(movie, R.id.action_navigation_home_to_navigation_movie_details);
+                    }));
                     SnapHelper snapHelper = new LinearSnapHelper();
                     snapHelper.attachToRecyclerView(slider);
 
@@ -89,8 +96,8 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
                 break;
             case 1:
                 if (movies != null) {
-                    RecyclerView gridMovies = binding.gridMovies;
-                    gridMovies.setLayoutManager(new GridLayoutManager(getContext(), 4));
+                    RecyclerView gridMovies = binding.popularMovies;
+                    gridMovies.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
                     gridMovies.setAdapter(new MovieViewAdapter(getContext(), movies, movie -> navigate(movie, R.id.action_navigation_home_to_navigation_movie_details)));
                 }
                 break;
@@ -107,7 +114,11 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
         args.putInt("id", movie.id);
         args.putString("title", movie.title);
         args.putString("overview", movie.overview);
-
+        args.putIntegerArrayList("genres", (ArrayList<Integer>) movie.genre_ids);
+        args.putString("rating", String.valueOf(movie.vote_average));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            args.putString("release_date", String.valueOf(movie.release_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear()));
+        }
         assert getParentFragment() != null;
         NavHostFragment.findNavController(getParentFragment()).navigate(id, args);
     }

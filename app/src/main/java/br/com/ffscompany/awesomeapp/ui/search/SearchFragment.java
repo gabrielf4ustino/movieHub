@@ -1,5 +1,6 @@
 package br.com.ffscompany.awesomeapp.ui.search;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -20,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.uwetrottmann.tmdb2.entities.BaseMovie;
 
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,11 +38,15 @@ public class SearchFragment extends Fragment implements LoaderManager.LoaderCall
 
     private boolean isToastShown = false;
 
+    private List<BaseMovie> allMovies = new ArrayList<>();
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         LoaderManager.getInstance(this).initLoader(0, null, this).forceLoad();
+        LoaderManager.getInstance(this).initLoader(1, null, this).forceLoad();
+        LoaderManager.getInstance(this).initLoader(2, null, this).forceLoad();
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,20 +63,51 @@ public class SearchFragment extends Fragment implements LoaderManager.LoaderCall
     @NonNull
     @Override
     public Loader<List<BaseMovie>> onCreateLoader(int id, @Nullable Bundle args) {
-        return new TmdbService(requireContext(), Options.POPULAR);
+        switch (id) {
+            case 0:
+                return new TmdbService(requireContext(), Options.NOW_PLAYING);
+            case 1:
+                return new TmdbService(requireContext(), Options.POPULAR);
+            case 2:
+                return new TmdbService(requireContext(), Options.UP_COMING);
+            default:
+                // Retorna null caso o ID seja inválido
+                return null;
+        }
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<List<BaseMovie>> loader, List<BaseMovie> movies) {
+        allMovies.addAll(movies);
+        if(loader.getId() == 2){
+            renderMovies();
+        }
+    }
+
+    private void renderMovies(){
+        List<BaseMovie> uniqueList = new ArrayList<>();
+        List<String> uniqueTitles = new ArrayList<>();
+        for (BaseMovie movie : allMovies) {
+            if (!uniqueTitles.contains(movie.title)) {
+                uniqueTitles.add(movie.title);
+                uniqueList.add(movie);
+            }
+        }
+
         RecyclerView moviesRecycler = binding.recyclerView;
         moviesRecycler.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
-        moviesRecycler.setAdapter(new MovieCardAdapter(getContext(), movies, movie -> {
-
+        moviesRecycler.setAdapter(new MovieCardAdapter(getContext(), uniqueList, movie -> {
             Bundle args = new Bundle();
+            assert movie.id != null;
             args.putInt("id", movie.id);
             args.putString("title", movie.title);
             args.putString("overview", movie.overview);
+            args.putIntegerArrayList("genres", (ArrayList<Integer>) movie.genre_ids);
+            args.putString("rating", String.valueOf(movie.vote_average));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                args.putString("release_date", String.valueOf(movie.release_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear()));
+            }
 
             assert getParentFragment() != null;
             NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_navigation_search_to_navigation_movie_details, args);
@@ -88,7 +125,7 @@ public class SearchFragment extends Fragment implements LoaderManager.LoaderCall
             public boolean onQueryTextChange(String searchText) {
                 MovieCardAdapter adapter = (MovieCardAdapter) moviesRecycler.getAdapter();
                 assert adapter != null;
-                List<BaseMovie> movieSearch = searchMovies(searchText, movies);
+                List<BaseMovie> movieSearch = searchMovies(searchText, uniqueList);
                 adapter.setMovies(movieSearch);
                 return true;
             }
