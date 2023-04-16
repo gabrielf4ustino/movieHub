@@ -63,11 +63,11 @@ public class SearchFragment extends Fragment implements LoaderManager.LoaderCall
     public Loader<List<BaseMovie>> onCreateLoader(int id, @Nullable Bundle args) {
         switch (id) {
             case 0:
-                return new TmdbService(requireContext(), Options.NOW_PLAYING, movieId);
+                return new TmdbService(requireContext(), Options.NOW_PLAYING, 0);
             case 1:
-                return new TmdbService(requireContext(), Options.POPULAR, movieId);
+                return new TmdbService(requireContext(), Options.POPULAR, 0);
             case 2:
-                return new TmdbService(requireContext(), Options.UP_COMING, movieId);
+                return new TmdbService(requireContext(), Options.UP_COMING, 0);
             default:
                 // Retorna null caso o ID seja inválido
                 return null;

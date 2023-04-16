@@ -57,7 +57,7 @@ public class TmdbService extends AsyncTaskLoader<List<BaseMovie>> {
                 }
             case GENRE:
                 try {
-                    assert genreId != null;
+                    assert genreId != 0;
                     response = tmdb.genreService().movies(genreId, "pt-BR", true, SortBy.POPULARITY_DESC).execute();
                 } catch (IOException e) {
                     e.printStackTrace();
