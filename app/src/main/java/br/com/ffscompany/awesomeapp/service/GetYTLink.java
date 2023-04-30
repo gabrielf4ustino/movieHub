@@ -36,7 +36,7 @@ public class GetYTLink extends AsyncTaskLoader<VideoPlayer> {
 
             YouTube.Videos.List request = youtube.videos().list("player");
             request.setId(videoId);
-            request.setKey("AIzaSyDXbCKYf5Uh8bTgHIC66fhQPHtmVs6aRhE");
+            request.setKey();
             VideoListResponse response = request.execute();
 
             List<Video> videos = response.getItems();
