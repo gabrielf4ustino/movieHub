@@ -17,7 +17,7 @@ import java.util.List;
 import retrofit2.Response;
 
 public class TmdbService extends AsyncTaskLoader<List<BaseMovie>> {
-    private static final Tmdb tmdb = new Tmdb("c7dd226ddb8f77f0536becda18f3c4fb");
+    private static final Tmdb tmdb = new Tmdb();
 
     private final Options option;
 
