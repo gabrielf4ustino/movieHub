@@ -22,8 +22,10 @@ Este é um aplicativo que lista filmes, mostrando informações sobre o filme, c
 ### Como Executar o Aplicativo
 1. Clone este repositório para sua máquina local.
 2. Certifique-se de ter instalado AndroidStudio versão Flamingo Canary 1  ou superior.
-3. Execute o comando `npm install` para instalar todas as dependências necessárias.
+3. Siga o procedimento para instalar o AndroidStudio e instalar o Emulador atravez do link: developer.android.com/studio/install
+4. Abra o repositorio pelo AndroidStudio
+5. Clique em Run para rodar o aplicativo
 
 ### Contato
-- João Pedro de Melo Roberto - joaopedro@example.com
-- Gabriel Faustino de Freitas Silva - gabrielfaustino@example.com
+- João Pedro de Melo Roberto - joao_melo@ufms.br
+- Gabriel Faustino de Freitas Silva - g.faustino@ufms.br
