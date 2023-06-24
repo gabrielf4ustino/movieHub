@@ -2,7 +2,7 @@
     <string name="app_name">MovieHub</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Pesquisar</string>
-    <string name="title_user">Perfil</string>
+    <string name="title_profile">Perfil</string>
     <string name="now_playing">Em cartaz</string>
     <string name="up_coming">Em breve</string>
     <string name="slider_description">Filme destaque</string>
@@ -17,6 +17,8 @@
     <string name="confirm_password">Confirme a senha</string>
     <string name="genre">Gênero</string>
     <string name="movie_image">Poster do filme</string>
+    <string name="e_mail">e-mail</string>
+    <string name="favorite_movies">Filmes Favoritados</string>
 
     <string-array name="genres">
         <item>28:Ação</item>

@@ -33,9 +33,9 @@ import br.com.ffscompany.moviehub.databinding.FragmentHomeBinding;
 import br.com.ffscompany.moviehub.service.GenreTmdbService;
 import br.com.ffscompany.moviehub.service.Options;
 import br.com.ffscompany.moviehub.service.TmdbService;
-import br.com.ffscompany.moviehub.view.genres.SpinnerItem;
 import br.com.ffscompany.moviehub.view.home.recyclerView.MovieViewAdapter;
 import br.com.ffscompany.moviehub.view.home.slider.SliderViewAdapter;
+import br.com.ffscompany.moviehub.view.home.recyclerView.SpinnerItem;
 
 public class HomeFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<BaseMovie>> {
 
