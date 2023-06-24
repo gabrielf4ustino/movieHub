@@ -5,7 +5,7 @@
     android:id="@+id/fragment_movie_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.movieDetails.MovieDetailsFragment">
+    tools:context=".view.movieDetails.MovieDetailsFragment">
 
 
     <!--    <WebView-->
@@ -22,7 +22,7 @@
         android:id="@+id/goback"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:drawableLeft="@drawable/goback_icon"
+        android:drawableStart="@drawable/goback_icon"
         android:background="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

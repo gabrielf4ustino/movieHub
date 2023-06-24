@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AwesomeApp</string>
+    <string name="app_name">MovieHub</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Pesquisar</string>
     <string name="title_notifications">Gêneros</string>
@@ -7,6 +7,9 @@
     <string name="up_coming">Em breve</string>
     <string name="slider_description">Filme destaque</string>
     <string name="popular">Populares</string>
+    <string name="email">E-mail</string>
+    <string name="password">Senha</string>
+
 
     <string-array name="genres">
         <item>28:Ação</item>
@@ -30,4 +33,8 @@
         <item>37:Faroeste</item>
 
     </string-array>
+
+    <string name="enter">Entrar</string>
+    <string name="crie_um_perfil">Crie um perfil</string>
+    <string name="novo_por_aqui">Novo por aqui?</string>
 </resources>

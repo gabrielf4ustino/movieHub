@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="br.com.ffscompany.awesomeapp.ui.home.HomeFragment"
+        android:name="br.com.ffscompany.moviehub.view.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/navigation_search"
-        android:name="br.com.ffscompany.awesomeapp.ui.search.SearchFragment"
+        android:name="br.com.ffscompany.moviehub.view.search.SearchFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_search" >
         <action
@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/navigation_genres"
-        android:name="br.com.ffscompany.awesomeapp.ui.genres.GenresFragment"
+        android:name="br.com.ffscompany.moviehub.view.genres.GenresFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_genres" >
         <action
@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/navigation_movie_details"
-        android:name="br.com.ffscompany.awesomeapp.ui.movieDetails.MovieDetailsFragment"
+        android:name="br.com.ffscompany.moviehub.view.movieDetails.MovieDetailsFragment"
         tools:layout="@layout/fragment_movie_details" >
         <action
             android:id="@+id/action_navigation_movie_details_to_navigation_home"
@@ -48,5 +48,14 @@
         <action
             android:id="@+id/action_navigation_movie_details_to_navigation_notifications"
             app:destination="@id/navigation_genres" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/LoginFragment"
+        android:name="br.com.ffscompany.moviehub.view.login.Login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_LoginFragment_to_navigation_home"
+            app:destination="@id/navigation_home" />
     </fragment>
 </navigation>
