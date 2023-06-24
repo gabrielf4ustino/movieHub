@@ -91,9 +91,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="52dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
@@ -103,24 +104,24 @@
             android:layout_marginStart="4dp"
             android:layout_marginEnd="110dp"
             android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
             android:text="@string/crie_um_perfil"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/login_text_sign"
             app:layout_constraintTop_toTopOf="parent"
-            tools:flow_verticalAlign="center"
-            android:focusable="true"
-            android:gravity="center"/>
+            tools:flow_verticalAlign="center" />
 
         <TextView
             android:id="@+id/login_text_sign"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginStart="110dp"
+            android:gravity="center"
             android:text="@string/novo_por_aqui"
             app:layout_constraintEnd_toStartOf="@+id/login_button_sign"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:gravity="center"/>
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

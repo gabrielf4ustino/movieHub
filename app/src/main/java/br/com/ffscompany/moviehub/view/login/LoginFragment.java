@@ -45,7 +45,6 @@ public class LoginFragment extends Fragment {
             return new View(requireContext());
         }
 
-
         EditText email = fragmentLoginBinding.loginEmail;
         EditText password = fragmentLoginBinding.loginPassword;
 
