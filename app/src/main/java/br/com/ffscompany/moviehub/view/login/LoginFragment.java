@@ -56,7 +56,7 @@ public class LoginFragment extends Fragment {
                 if (user != null) {
                     try {
                         if (email.getText().toString().equals(user.user.getEmail()) && password.getText().toString().equals(AESEncryption.decrypt(user.user.getPassword(), AESEncryption.stringToKey(user.user.getKey())))) {
-                            setUserSession();
+                            setUserSession(email.getText().toString());
                             NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_login_fragment_to_navigation_home);
                         } else {
                             Toast.makeText(this.getContext(), "E-mail e/ou senha incorretos.", Toast.LENGTH_SHORT).show();
@@ -82,10 +82,10 @@ public class LoginFragment extends Fragment {
         fragmentLoginBinding = null;
     }
 
-    private void setUserSession(){
+    private void setUserSession(String email){
         SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences("SessionLogin", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("logged", "true");
+        editor.putString("logged", email);
         editor.apply();
     }
 
