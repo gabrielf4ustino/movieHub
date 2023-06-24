@@ -51,6 +51,7 @@ public class TmdbService extends AsyncTaskLoader<List<BaseMovie>> {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                break;
         }
         if (response != null && response.isSuccessful()) {
             return response.body().results;

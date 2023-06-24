@@ -4,4 +4,5 @@ public enum Options {
     NOW_PLAYING,
     POPULAR,
     UP_COMING,
+    WATCH_PROVIDERS
 }

@@ -28,7 +28,7 @@
     <fragment
         android:id="@+id/navigation_genres"
         android:name="br.com.ffscompany.moviehub.view.genres.GenresFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/title_user"
         tools:layout="@layout/fragment_genres" >
         <action
             android:id="@+id/action_navigation_genres_to_navigation_movie_details"

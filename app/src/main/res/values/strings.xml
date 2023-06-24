@@ -2,7 +2,7 @@
     <string name="app_name">MovieHub</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Pesquisar</string>
-    <string name="title_notifications">Gêneros</string>
+    <string name="title_user">Perfil</string>
     <string name="now_playing">Em cartaz</string>
     <string name="up_coming">Em breve</string>
     <string name="slider_description">Filme destaque</string>
