@@ -2,6 +2,7 @@ package br.com.ffscompany.moviehub.view.movieDetails;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import br.com.ffscompany.moviehub.R;
 import br.com.ffscompany.moviehub.databinding.FragmentMovieDetailsBinding;
 import br.com.ffscompany.moviehub.service.VideoTmdbService;
+import br.com.ffscompany.moviehub.service.WatchProviderService;
 
 public class MovieDetailsFragment extends Fragment implements LoaderManager.LoaderCallbacks<String> {
 
@@ -33,13 +35,16 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
 
     private Bundle bundle;
 
+    private Integer movieId;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.bundle = getArguments();
+        this.movieId = bundle.getInt("id");
 
-        LoaderManager.getInstance(this).initLoader(bundle.getInt("id"), null, this).forceLoad();
+        LoaderManager.getInstance(this).initLoader(movieId, null, this).forceLoad();
+        LoaderManager.getInstance(this).initLoader(0, null, this).forceLoad();
     }
 
     @Override
@@ -89,35 +94,48 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
     @NonNull
     @Override
     public Loader<String> onCreateLoader(int id, @Nullable Bundle args) {
-        return new VideoTmdbService(requireContext(), id);
+        switch (id) {
+            case 0:
+                return new WatchProviderService(requireContext(), movieId);
+            default:
+                return new VideoTmdbService(requireContext(), id);
+        }
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<String> loader, String data) {
-        WebView webView = binding.playerView;
-//        webView.getSettings().setJavaScriptEnabled(true);
-//        webView.loadUrl("<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/" + data + "\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; fullscreen;\"></iframe>\n", "text/html", "utf-8");
-//        webView.getSettings().setPluginState(WebSettings.PluginState.ON);
-//        webView.setWebChromeClient(new WebChromeClient());
+        switch (loader.getId()) {
+            case 0:
+                TextView watchProvider = binding.movieWatchProvider;
+                if (!data.equals("")) {
+                    watchProvider.setText("Disponível em: " + data);
+                } else {
+                    watchProvider.setVisibility(View.GONE);
+                }
+                break;
+            default:
+                WebView webView = binding.playerView;
 
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setMediaPlaybackRequiresUserGesture(false);
-        webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
+                WebSettings webSettings = webView.getSettings();
+                webSettings.setJavaScriptEnabled(true);
+                webSettings.setMediaPlaybackRequiresUserGesture(false);
+                webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);
 
-        String videoUrl = "https://www.youtube.com/embed/" + data;
-        String html = "<html>\n" +
-                "  <body style=\"margin:0;padding:0;\">\n" +
-                "    <iframe width=\"100%\" height=\"100%\" src=\"" + videoUrl + "\" frameborder=\"0\"></iframe>\n" +
-                "  </body>\n" +
-                "</html>\n";
+                String videoUrl = "https://www.youtube.com/embed/" + data;
+                String html = "<html>\n" +
+                        "  <body style=\"margin:0;padding:0;\">\n" +
+                        "    <iframe width=\"100%\" height=\"100%\" src=\"" + videoUrl + "\" frameborder=\"0\"></iframe>\n" +
+                        "  </body>\n" +
+                        "</html>\n";
 
-        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+                webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
 
-        webView.setWebChromeClient(new WebChromeClient());
-        webView.setWebViewClient(new WebViewClient());
+                webView.setWebChromeClient(new WebChromeClient());
+                webView.setWebViewClient(new WebViewClient());
 
-        webView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null);
+                webView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null);
+                break;
+        }
 
     }
 

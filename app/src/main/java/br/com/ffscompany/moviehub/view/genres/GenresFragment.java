@@ -1,7 +1,8 @@
-package br.com.ffscompany.moviehub.view.home;
+package br.com.ffscompany.moviehub.view.genres;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,7 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
 
 import com.uwetrottmann.tmdb2.entities.BaseMovie;
 
@@ -29,35 +27,20 @@ import java.util.Arrays;
 import java.util.List;
 
 import br.com.ffscompany.moviehub.R;
-import br.com.ffscompany.moviehub.databinding.FragmentHomeBinding;
+import br.com.ffscompany.moviehub.databinding.FragmentGenresBinding;
 import br.com.ffscompany.moviehub.service.GenreTmdbService;
-import br.com.ffscompany.moviehub.service.Options;
-import br.com.ffscompany.moviehub.service.TmdbService;
-import br.com.ffscompany.moviehub.view.genres.SpinnerItem;
 import br.com.ffscompany.moviehub.view.home.recyclerView.MovieViewAdapter;
-import br.com.ffscompany.moviehub.view.home.slider.SliderViewAdapter;
 
-public class HomeFragment extends Fragment implements LoaderManager.LoaderCallbacks<List<BaseMovie>> {
+public class GenresFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
-
+    private FragmentGenresBinding binding;
     private int loaderId = 0;
-
     private LoaderManager loaderManager;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        LoaderManager.getInstance(this).initLoader(0, null, this).forceLoad();
-        LoaderManager.getInstance(this).initLoader(1, null, this).forceLoad();
-        LoaderManager.getInstance(this).initLoader(2, null, this).forceLoad();
-
-    }
-
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
-//        requireActivity().findViewById(R.id.nav_view).setVisibility(View.VISIBLE);
+        binding = FragmentGenresBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
 
         Spinner spinner = binding.genSpinner;
         List<SpinnerItem> itemList = new ArrayList<>(Arrays.asList(
@@ -87,7 +70,7 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        RecyclerView gridGen = binding.genresMovies;
+        RecyclerView gridGen = binding.genGrid;
         gridGen.setLayoutManager(new GridLayoutManager(getContext(), 4));
 
         loaderManager = LoaderManager.getInstance(getActivity());
@@ -105,9 +88,9 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
 
                     @Override
                     public void onLoadFinished(@NonNull Loader<List<BaseMovie>> loader, List<BaseMovie> data) {
-                        RecyclerView movies = binding.genresMovies;
-                        movies.setLayoutManager(new GridLayoutManager(getContext(), 4));
-                        movies.setAdapter(new MovieViewAdapter(getContext(), data, movie -> navigate(movie, R.id.action_navigation_home_to_navigation_movie_details)));
+                        RecyclerView upComingMovies = binding.genGrid;
+                        upComingMovies.setLayoutManager(new GridLayoutManager(getContext(), 4));
+                        upComingMovies.setAdapter(new MovieViewAdapter(getContext(), data, movie -> navigate(movie, R.id.action_navigation_genres_to_navigation_movie_details)));
                     }
 
                     @Override
@@ -123,63 +106,7 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
             }
         });
 
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
-    @NonNull
-    @Override
-    public Loader<List<BaseMovie>> onCreateLoader(int id, @Nullable Bundle args) {
-        switch (id) {
-            case 0:
-                return new TmdbService(requireContext(), Options.NOW_PLAYING);
-            case 1:
-                return new TmdbService(requireContext(), Options.POPULAR);
-            case 2:
-                return new TmdbService(requireContext(), Options.UP_COMING);
-            default:
-                // Retorna null caso o ID seja inválido
-                return null;
-        }
-    }
-
-    @Override
-    public void onLoadFinished(@NonNull Loader<List<BaseMovie>> loader, List<BaseMovie> movies) {
-        switch (loader.getId()) {
-            case 0:
-                if (movies != null) {
-                    RecyclerView slider = binding.slider;
-                    slider.setOnFlingListener(null);
-                    slider.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-                    slider.setAdapter(new SliderViewAdapter(getContext(), movies, movie -> {
-                        navigate(movie, R.id.action_navigation_home_to_navigation_movie_details);
-                    }));
-                    SnapHelper snapHelper = new LinearSnapHelper();
-                    snapHelper.attachToRecyclerView(slider);
-
-                    RecyclerView nowPlayingMovies = binding.nowPlayingMovies;
-                    nowPlayingMovies.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-                    nowPlayingMovies.setAdapter(new MovieViewAdapter(getContext(), movies, movie -> navigate(movie, R.id.action_navigation_home_to_navigation_movie_details)));
-                }
-                break;
-            case 1:
-                if (movies != null) {
-                    RecyclerView gridMovies = binding.popularMovies;
-                    gridMovies.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-                    gridMovies.setAdapter(new MovieViewAdapter(getContext(), movies, movie -> navigate(movie, R.id.action_navigation_home_to_navigation_movie_details)));
-                }
-                break;
-            case 2:
-                RecyclerView upComingMovies = binding.upComingMovies;
-                upComingMovies.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-                upComingMovies.setAdapter(new MovieViewAdapter(getContext(), movies, movie -> navigate(movie, R.id.action_navigation_home_to_navigation_movie_details)));
-                break;
-        }
+        return root;
     }
 
     private void navigate(BaseMovie movie, int id) {
@@ -196,8 +123,10 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
         NavHostFragment.findNavController(getParentFragment()).navigate(id, args);
     }
 
+
     @Override
-    public void onLoaderReset(@NonNull Loader<List<BaseMovie>> loader) {
-        loader.reset();
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

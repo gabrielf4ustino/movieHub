@@ -63,6 +63,7 @@ public class SignFragment extends Fragment {
         EditText name = fragmentSignBinding.signName;
         EditText email = fragmentSignBinding.signEmail;
         EditText password = fragmentSignBinding.signPassword;
+        EditText confirmPassword = fragmentSignBinding.signConfirmPassword;
 
         fragmentSignBinding.signButtonEnter.setOnClickListener(view -> {
             if (name.getText().toString().equals("") || email.getText().toString().equals("") || password.getText().toString().equals("")) {
@@ -70,6 +71,10 @@ public class SignFragment extends Fragment {
             } else {
                 if (db.userModel().getUserWithFavoriteMovies(email.getText().toString()) != null) {
                     Toast.makeText(this.getContext(), "Email já cadastrado.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(!password.getText().toString().equals(confirmPassword.getText().toString())){
+                    Toast.makeText(this.getContext(), "As senhas não coincidem.", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 try {
@@ -94,16 +99,9 @@ public class SignFragment extends Fragment {
     }
 
     void setUserSession(){
-        // Obtém uma referência às SharedPreferences
         SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences("SessionLogin", Context.MODE_PRIVATE);
-
-        // Obtém um editor para modificar as SharedPreferences
         SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        // Armazena as informações da sessão (exemplo: nome de usuário)
         editor.putString("logged", "true");
-
-        // Aplica as alterações
         editor.apply();
     }
 
