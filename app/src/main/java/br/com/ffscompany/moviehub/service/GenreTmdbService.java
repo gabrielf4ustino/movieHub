@@ -19,7 +19,7 @@ import retrofit2.Response;
 
 public class GenreTmdbService extends AsyncTaskLoader<List<BaseMovie>> {
 
-    private static final Tmdb tmdb = new Tmdb("c7dd226ddb8f77f0536becda18f3c4fb");
+    private static final Tmdb tmdb = new Tmdb("c32957f584b399b761627b576a78e213");
 
     private final Integer genreId;
 

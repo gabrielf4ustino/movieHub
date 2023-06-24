@@ -23,6 +23,7 @@ import com.uwetrottmann.tmdb2.entities.BaseMovie;
 
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import br.com.ffscompany.moviehub.R;
@@ -42,8 +43,30 @@ public class GenresFragment extends Fragment {
         View root = binding.getRoot();
 
         Spinner spinner = binding.genSpinner;
+        List<SpinnerItem> itemList = new ArrayList<>(Arrays.asList(
+                new SpinnerItem(28, "Ação"),
+                new SpinnerItem(12, "Aventura"),
+                new SpinnerItem(16, "Animação"),
+                new SpinnerItem(35, "Comédia"),
+                new SpinnerItem(80, "Crime"),
+                new SpinnerItem(99, "Documentário"),
+                new SpinnerItem(18, "Drama"),
+                new SpinnerItem(10751, "Família"),
+                new SpinnerItem(14, "Fantasia"),
+                new SpinnerItem(36, "História"),
+                new SpinnerItem(27, "Terror"),
+                new SpinnerItem(10402, "Música"),
+                new SpinnerItem(9648, "Mistério"),
+                new SpinnerItem(10749, "Romance"),
+                new SpinnerItem(878, "Ficção científica"),
+                new SpinnerItem(10770, "Filme para TV"),
+                new SpinnerItem(53, "Suspense"),
+                new SpinnerItem(10752, "Guerra"),
+                new SpinnerItem(37, "Ocidental")
+        ));
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.genres, android.R.layout.simple_spinner_item);
+
+        ArrayAdapter<SpinnerItem> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, itemList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
@@ -55,18 +78,12 @@ public class GenresFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selectedItem = parent.getItemAtPosition(position).toString();
-                int index = selectedItem.indexOf(':');
-                String genreId = null;
-                if (index != -1) {
-                    genreId = selectedItem.substring(0, index);
-                }
-                String finalGenreId = genreId;
+                SpinnerItem selectedItem = (SpinnerItem) parent.getItemAtPosition(position);
                 loaderManager.initLoader(loaderId++, null, new LoaderManager.LoaderCallbacks<List<BaseMovie>>() {
                     @NonNull
                     @Override
                     public Loader<List<BaseMovie>> onCreateLoader(int id, @Nullable Bundle args) {
-                        return new GenreTmdbService(getContext(), Integer.parseInt(finalGenreId));
+                        return new GenreTmdbService(getContext(), selectedItem.getId());
                     }
 
                     @Override

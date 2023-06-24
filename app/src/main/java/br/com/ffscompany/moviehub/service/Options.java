@@ -4,6 +4,4 @@ public enum Options {
     NOW_PLAYING,
     POPULAR,
     UP_COMING,
-
-    GENRE
 }

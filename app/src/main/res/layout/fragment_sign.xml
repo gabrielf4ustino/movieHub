@@ -9,11 +9,11 @@
     <Button
         android:id="@+id/goback"
         android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:drawableStart="@drawable/icon_selector"
+        android:layout_height="48dp"
         android:background="@android:color/transparent"
+        android:drawableStart="@drawable/icon_selector"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/sign_title"
@@ -75,6 +75,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sign_email" />
 
+    <EditText
+        android:id="@+id/sign_confirm_password"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="10dp"
+        android:autofillHints="password"
+        android:ems="10"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sign_password" />
+
     <TextView
         android:id="@+id/sign_label_name"
         android:layout_width="wrap_content"
@@ -109,17 +123,30 @@
         app:layout_constraintBottom_toTopOf="@+id/sign_password"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <TextView
+        android:id="@+id/sign_label_confirm_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="5dp"
+        android:autofillHints="password"
+        android:labelFor="@id/sign_confirm_password"
+        android:text="@string/confirm_password"
+        app:layout_constraintBottom_toTopOf="@+id/sign_confirm_password"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <Button
         android:id="@+id/sign_button_enter"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="105dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="105dp"
         android:text="@string/enter"
         app:flow_verticalAlign="center"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_password" />
+        app:layout_constraintTop_toBottomOf="@+id/sign_confirm_password" />
 
 </androidx.constraintlayout.widget.ConstraintLayout >

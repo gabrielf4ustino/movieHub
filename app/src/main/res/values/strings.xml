@@ -9,7 +9,14 @@
     <string name="popular">Populares</string>
     <string name="email">E-mail</string>
     <string name="password">Senha</string>
-
+    <string name="enter">Entrar</string>
+    <string name="crie_um_perfil">Crie um perfil</string>
+    <string name="novo_por_aqui">Novo por aqui?</string>
+    <string name="sign">Registrar-se</string>
+    <string name="name">Nome</string>
+    <string name="confirm_password">Confirme a senha</string>
+    <string name="genre">Gênero</string>
+    <string name="movie_image">Poster do filme</string>
 
     <string-array name="genres">
         <item>28:Ação</item>
@@ -31,14 +38,6 @@
         <item>53:Suspense</item>
         <item>10752:Guerra</item>
         <item>37:Faroeste</item>
-
     </string-array>
 
-    <string name="enter">Entrar</string>
-    <string name="crie_um_perfil">Crie um perfil</string>
-    <string name="novo_por_aqui">Novo por aqui?</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="sign">Registrar-se</string>
-    <string name="name">Nome\n</string>
 </resources>
