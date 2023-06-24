@@ -86,7 +86,7 @@ public class SignFragment extends Fragment {
                 }
                 Toast.makeText(this.getContext(), "Usuário cadastrado com sucesso.", Toast.LENGTH_SHORT).show();
 
-                setUserSession();
+                setUserSession(email.getText().toString());
 
                 NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_navigation_sign_to_navigation_home);
             }
@@ -98,10 +98,10 @@ public class SignFragment extends Fragment {
         return fragmentSignBinding.getRoot();
     }
 
-    void setUserSession(){
+    void setUserSession(String email){
         SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences("SessionLogin", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("logged", "true");
+        editor.putString("logged", email);
         editor.apply();
     }
 

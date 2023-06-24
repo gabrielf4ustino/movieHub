@@ -1,5 +1,6 @@
 package br.com.ffscompany.moviehub.view.home;
 
+import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -57,8 +58,6 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-//        requireActivity().findViewById(R.id.nav_view).setVisibility(View.VISIBLE);
-
         Spinner spinner = binding.genSpinner;
         List<SpinnerItem> itemList = new ArrayList<>(Arrays.asList(
                 new SpinnerItem(28, "Ação"),
@@ -122,7 +121,6 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
         return binding.getRoot();
     }
 
@@ -180,6 +178,7 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
                 upComingMovies.setAdapter(new MovieViewAdapter(getContext(), movies, movie -> navigate(movie, R.id.action_navigation_home_to_navigation_movie_details)));
                 break;
         }
+        requireActivity().findViewById(R.id.nav_view).setVisibility(View.VISIBLE);
     }
 
     private void navigate(BaseMovie movie, int id) {
