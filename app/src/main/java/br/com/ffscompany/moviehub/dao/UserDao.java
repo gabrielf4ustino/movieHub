@@ -4,20 +4,18 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
-import java.util.List;
-
 import br.com.ffscompany.moviehub.entity.User;
+import br.com.ffscompany.moviehub.entity.UserWithFavoriteMovies;
 
 @Dao
 public interface UserDao {
 
-    @Query("SELECT * FROM User WHERE id = :id LIMIT 1")
-    User getUserById(int id);
-
-    @Query("SELECT * FROM User")
-    List<User> getAll();
+    @Transaction
+    @Query("SELECT * FROM User WHERE id = :id")
+    UserWithFavoriteMovies getUserWithFavoriteMovies(Long id);
 
     @Update
     void update(User user);
@@ -27,5 +25,4 @@ public interface UserDao {
 
     @Delete
     void delete(User user);
-
 }

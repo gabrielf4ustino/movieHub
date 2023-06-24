@@ -71,7 +71,6 @@ public class GenresFragment extends Fragment {
 
                     @Override
                     public void onLoadFinished(@NonNull Loader<List<BaseMovie>> loader, List<BaseMovie> data) {
-                        Log.d("DATA", data.get(1).title);
                         RecyclerView upComingMovies = binding.genGrid;
                         upComingMovies.setLayoutManager(new GridLayoutManager(getContext(), 4));
                         upComingMovies.setAdapter(new MovieViewAdapter(getContext(), data, movie -> navigate(movie, R.id.action_navigation_genres_to_navigation_movie_details)));

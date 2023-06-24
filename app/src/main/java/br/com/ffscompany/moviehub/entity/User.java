@@ -1,20 +1,22 @@
 package br.com.ffscompany.moviehub.entity;
 
 import androidx.room.Entity;
-import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
+import androidx.room.Relation;
 
-@Entity(foreignKeys = @ForeignKey(entity = FavoriteMovie.class, parentColumns = "id", childColumns = "cursoID", onDelete = ForeignKey.CASCADE))
+import java.util.List;
+
+@Entity
 public class User {
 
     @PrimaryKey(autoGenerate = true)
-    Long id;
+    private Long id;
 
-    String name;
+    private String name;
 
-    String email;
+    private String email;
 
-    String password;
+    private String password;
 
     public User() {
     }

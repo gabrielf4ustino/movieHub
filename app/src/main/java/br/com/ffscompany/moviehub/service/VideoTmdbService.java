@@ -9,6 +9,7 @@ import androidx.loader.content.AsyncTaskLoader;
 
 import com.uwetrottmann.tmdb2.Tmdb;
 import com.uwetrottmann.tmdb2.entities.Videos;
+import com.uwetrottmann.tmdb2.enumerations.VideoType;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,11 +31,11 @@ public class VideoTmdbService extends AsyncTaskLoader<String> {
     public String loadInBackground() {
         try {
             Response<Videos> response = tmdb.moviesService().videos(movieId, "pt-BR").execute();
-            if (response != null && response.isSuccessful()) {
+            if (response.isSuccessful()) {
                 List<Videos.Video> videos = response.body().results;
                 for (Videos.Video video : videos) {
                     assert video.type != null;
-                    if (video.type.equals("Trailer") && video.site.equals("YouTube")) {
+                    if (video.type.equals(VideoType.TRAILER) && video.site.equals("YouTube")) {
                         return video.key;
                     }
                 }

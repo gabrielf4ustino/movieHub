@@ -7,17 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".view.movieDetails.MovieDetailsFragment">
 
-
-    <!--    <WebView-->
-    <!--        android:id="@+id/video_view"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="300dp"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        android:layout_marginTop="-45dp"-->
-    <!--        android:layout_marginLeft="-5dp"/>-->
-
     <Button
         android:id="@+id/goback"
         android:layout_width="100dp"
