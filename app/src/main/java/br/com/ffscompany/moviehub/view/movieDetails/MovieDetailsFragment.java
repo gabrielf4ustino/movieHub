@@ -1,5 +1,6 @@
 package br.com.ffscompany.moviehub.view.movieDetails;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,15 +31,12 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
 
     private MovieDetailsViewModel movieDetailsViewModel;
 
-    private View navHost;
-
     private Bundle bundle;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.navHost = requireActivity().findViewById(R.id.nav_view);
         this.bundle = getArguments();
 
         LoaderManager.getInstance(this).initLoader(bundle.getInt("id"), null, this).forceLoad();
@@ -46,11 +44,18 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        navHost.setVisibility(View.GONE);
+        binding = FragmentMovieDetailsBinding.inflate(inflater, container, false);
 
         movieDetailsViewModel = new ViewModelProvider(this, new ViewModelFactory(bundle.getString("title"), bundle.getString("overview"), bundle.getString("rating"), bundle.getString("release_date"))).get(MovieDetailsViewModel.class);
 
-        binding = FragmentMovieDetailsBinding.inflate(inflater, container, false);
+        Button goBackButton = binding.goback;
+
+        int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
+            goBackButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.goback_icon, 0, 0, 0);
+        } else {
+            goBackButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.goback_icon_black, 0, 0, 0);
+        }
 
         View root = binding.getRoot();
 
@@ -79,7 +84,6 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-        navHost.setVisibility(View.VISIBLE);
     }
 
     @NonNull

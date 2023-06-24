@@ -55,7 +55,22 @@
         android:name="br.com.ffscompany.moviehub.view.login.LoginFragment"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_LoginFragment_to_navigation_home"
+            android:id="@+id/action_login_fragment_to_navigation_home"
             app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_navigation_login_to_navigation_sign"
+            app:destination="@id/navigation_sign" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_sign"
+        android:name="br.com.ffscompany.moviehub.view.sign.SignFragment"
+        tools:layout="@layout/fragment_sign" >
+        <action
+            android:id="@+id/action_navigation_sign_to_navigation_home"
+            app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_navigation_sign_to_navigation_login"
+            app:destination="@id/navigation_login" />
     </fragment>
 </navigation>

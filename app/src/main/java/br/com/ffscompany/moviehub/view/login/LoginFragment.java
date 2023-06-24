@@ -1,66 +1,116 @@
 package br.com.ffscompany.moviehub.view.login;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
+
+import java.util.Objects;
 
 import br.com.ffscompany.moviehub.R;
+import br.com.ffscompany.moviehub.database.LocalDatabase;
+import br.com.ffscompany.moviehub.databinding.FragmentLoginBinding;
+import br.com.ffscompany.moviehub.entity.UserWithFavoriteMovies;
+import br.com.ffscompany.moviehub.service.AESEncryption;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link LoginFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class LoginFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private LocalDatabase db;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public LoginFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Login.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static LoginFragment newInstance(String param1, String param2) {
-        LoginFragment fragment = new LoginFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private FragmentLoginBinding fragmentLoginBinding;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+        db = LocalDatabase.getDatabase(this.getContext());
+    }
+
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        fragmentLoginBinding = FragmentLoginBinding.inflate(inflater, container, false);
+
+        if (isUserLoggedIn()) {
+            NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_login_fragment_to_navigation_home);
+            return new View(requireContext());
         }
+
+
+        EditText email = fragmentLoginBinding.loginEmail;
+        EditText password = fragmentLoginBinding.loginPassword;
+
+        fragmentLoginBinding.loginButtonEnter.setOnClickListener(view -> {
+            if (email.getText().toString().equals("") || password.getText().toString().equals("")) {
+                Toast.makeText(this.getContext(), "Preencha todos os campos.", Toast.LENGTH_SHORT).show();
+            } else {
+                UserWithFavoriteMovies user = db.userModel().getUserWithFavoriteMovies(email.getText().toString());
+                if (user != null) {
+                    try {
+                        if (email.getText().toString().equals(user.user.getEmail()) && password.getText().toString().equals(AESEncryption.decrypt(user.user.getPassword(), AESEncryption.stringToKey(user.user.getKey())))) {
+                            setUserSession();
+                            NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_login_fragment_to_navigation_home);
+                        } else {
+                            Toast.makeText(this.getContext(), "E-mail e/ou senha incorretos.", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    Toast.makeText(this.getContext(), "Usuário não cadastrado", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        TextView sign = fragmentLoginBinding.loginButtonSign;
+        sign.setOnClickListener(view -> NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_navigation_login_to_navigation_sign));
+        return fragmentLoginBinding.getRoot();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_login, container, false);
+    public void onDestroyView() {
+        super.onDestroyView();
+        hideKeyboard(Objects.requireNonNull(getActivity()));
+        fragmentLoginBinding = null;
+    }
+
+    private void setUserSession(){
+        // Obtém uma referência às SharedPreferences
+        SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences("SessionLogin", Context.MODE_PRIVATE);
+
+        // Obtém um editor para modificar as SharedPreferences
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        // Armazena as informações da sessão (exemplo: nome de usuário)
+        editor.putString("logged", "true");
+
+        // Aplica as alterações
+        editor.apply();
+    }
+
+    private boolean isUserLoggedIn() {
+        // Verifique se as informações da sessão (exemplo: nome de usuário) estão presentes nas SharedPreferences
+        SharedPreferences sharedPreferences = requireContext().getSharedPreferences("SessionLogin", Context.MODE_PRIVATE);
+        return sharedPreferences.contains("logged");
+    }
+
+    private static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

@@ -39,14 +39,14 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
         super.onCreate(savedInstanceState);
 
         LoaderManager.getInstance(this).initLoader(0, null, this).forceLoad();
-
         LoaderManager.getInstance(this).initLoader(1, null, this).forceLoad();
-
         LoaderManager.getInstance(this).initLoader(2, null, this).forceLoad();
+
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
+//        requireActivity().findViewById(R.id.nav_view).setVisibility(View.VISIBLE);
         return binding.getRoot();
     }
 

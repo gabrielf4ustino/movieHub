@@ -14,8 +14,8 @@ import br.com.ffscompany.moviehub.entity.UserWithFavoriteMovies;
 public interface UserDao {
 
     @Transaction
-    @Query("SELECT * FROM User WHERE id = :id")
-    UserWithFavoriteMovies getUserWithFavoriteMovies(Long id);
+    @Query("SELECT * FROM User WHERE email = :email")
+    UserWithFavoriteMovies getUserWithFavoriteMovies(String email);
 
     @Update
     void update(User user);

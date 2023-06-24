@@ -18,14 +18,16 @@ public class User {
 
     private String password;
 
+    private String key;
+
     public User() {
     }
 
-    public User(Long id, String name, String email, String password) {
-        this.id = id;
+    public User(String name, String email, String password, String key) {
         this.name = name;
         this.email = email;
         this.password = password;
+        this.key = key;
     }
 
     public Long getId() {
@@ -58,5 +60,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }
