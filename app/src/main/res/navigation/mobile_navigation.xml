@@ -26,10 +26,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_genres"
-        android:name="br.com.ffscompany.moviehub.view.genres.GenresFragment"
-        android:label="@string/title_user"
-        tools:layout="@layout/fragment_genres" >
+        android:id="@+id/navigation_profile"
+        android:name="br.com.ffscompany.moviehub.view.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_navigation_genres_to_navigation_movie_details"
             app:destination="@id/navigation_movie_details" />
@@ -47,7 +47,7 @@
             app:destination="@id/navigation_search" />
         <action
             android:id="@+id/action_navigation_movie_details_to_navigation_notifications"
-            app:destination="@id/navigation_genres" />
+            app:destination="@id/navigation_profile" />
     </fragment>
 
     <fragment

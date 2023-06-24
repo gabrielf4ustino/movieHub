@@ -1,4 +1,4 @@
-package br.com.ffscompany.moviehub.view.genres;
+package br.com.ffscompany.moviehub.view.home.recyclerView;
 
 public class SpinnerItem {
     private int id;
