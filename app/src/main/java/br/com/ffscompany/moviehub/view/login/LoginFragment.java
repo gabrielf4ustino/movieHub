@@ -83,16 +83,9 @@ public class LoginFragment extends Fragment {
     }
 
     private void setUserSession(){
-        // Obtém uma referência às SharedPreferences
         SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences("SessionLogin", Context.MODE_PRIVATE);
-
-        // Obtém um editor para modificar as SharedPreferences
         SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        // Armazena as informações da sessão (exemplo: nome de usuário)
         editor.putString("logged", "true");
-
-        // Aplica as alterações
         editor.apply();
     }
 
