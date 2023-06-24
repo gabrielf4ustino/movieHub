@@ -53,8 +53,13 @@ public class ProfileFragment extends Fragment {
         User user = db.userModel().getUserWithFavoriteMovies(sharedPreferences.getString("logged", "aaa")).user;
         username.setText(user.getName());
         email.setText(user.getEmail());
+        Button editButton = fragmentSignBinding.configButton;
+        Button logoutButton = fragmentSignBinding.logoutButton;
 
-        Button logoutButton = fragmentSignBinding.configButton;
+        editButton.setOnClickListener(v -> {
+
+        });
+
         logoutButton.setOnClickListener(v -> {
             removeUserSession();
             requireActivity().findViewById(R.id.nav_view).setVisibility(View.GONE);
