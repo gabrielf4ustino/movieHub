@@ -50,7 +50,7 @@ public class ProfileFragment extends Fragment {
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("SessionLogin", Context.MODE_PRIVATE);
 
         Log.d("logged", sharedPreferences.getString("logged", "aaa"));
-        User user = db.userModel().getUserWithFavoriteMovies(sharedPreferences.getString("logged", "aaa")).user;
+        User user = db.user().getUserWithFavoriteMovies(sharedPreferences.getString("logged", "aaa")).user;
         username.setText(user.getName());
         email.setText(user.getEmail());
         Button editButton = fragmentSignBinding.configButton;

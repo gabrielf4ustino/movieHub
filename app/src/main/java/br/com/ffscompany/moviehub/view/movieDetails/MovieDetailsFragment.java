@@ -1,6 +1,7 @@
 package br.com.ffscompany.moviehub.view.movieDetails;
 
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,8 +23,14 @@ import androidx.loader.content.Loader;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Objects;
+
 import br.com.ffscompany.moviehub.R;
+import br.com.ffscompany.moviehub.database.LocalDatabase;
 import br.com.ffscompany.moviehub.databinding.FragmentMovieDetailsBinding;
+import br.com.ffscompany.moviehub.entity.FavoriteMovie;
 import br.com.ffscompany.moviehub.service.VideoTmdbService;
 import br.com.ffscompany.moviehub.service.WatchProviderService;
 
@@ -36,13 +43,28 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
     private Bundle bundle;
 
     private Integer movieId;
+    private String title;
+
+    private String overview;
+
+    private String rating;
+
+    private String releaseDate;
+
+    private Boolean favorite = false;
+
+    private LocalDatabase db;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.bundle = getArguments();
         this.movieId = bundle.getInt("id");
-
+        this.title = bundle.getString("title");
+        this.overview = bundle.getString("overview");
+        this.rating = bundle.getString("rating");
+        this.releaseDate = bundle.getString("releaseDate");
+        db = LocalDatabase.getDatabase(this.getContext());
         LoaderManager.getInstance(this).initLoader(movieId, null, this).forceLoad();
         LoaderManager.getInstance(this).initLoader(0, null, this).forceLoad();
     }
@@ -50,17 +72,49 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMovieDetailsBinding.inflate(inflater, container, false);
-
+        requireActivity().findViewById(R.id.nav_view).setVisibility(View.GONE);
         movieDetailsViewModel = new ViewModelProvider(this, new ViewModelFactory(bundle.getString("title"), bundle.getString("overview"), bundle.getString("rating"), bundle.getString("release_date"))).get(MovieDetailsViewModel.class);
 
+        if (db.favoriteMovie().getFavoriteMovies(Integer.toUnsignedLong(movieId)) != null)
+            this.favorite = true;
+
         Button goBackButton = binding.goback;
+        Button favoriteButton = binding.favoriteButton;
 
         int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
             goBackButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.goback_icon, 0, 0, 0);
+            if (favorite)
+                favoriteButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.favorite_white_24dp, 0, 0, 0);
+            else
+                favoriteButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.favorite_border_white_24dp, 0, 0, 0);
         } else {
             goBackButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.goback_icon_black, 0, 0, 0);
+            if (favorite)
+                favoriteButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.favorite_black_24dp, 0, 0, 0);
+            else
+                favoriteButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.favorite_border_black_24dp, 0, 0, 0);
         }
+
+        favoriteButton.setOnClickListener(view -> {
+            if (!favorite) {
+                db.favoriteMovie().insert(new FavoriteMovie(Integer.toUnsignedLong(movieId), title, null, null, overview, rating, releaseDate));
+            } else {
+                db.favoriteMovie().deleteById(Integer.toUnsignedLong(movieId));
+            }
+            favorite = !favorite;
+            if (currentNightMode == Configuration.UI_MODE_NIGHT_YES) {
+                if (favorite)
+                    favoriteButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.favorite_white_24dp, 0, 0, 0);
+                else
+                    favoriteButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.favorite_border_white_24dp, 0, 0, 0);
+            } else {
+                if (favorite)
+                    favoriteButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.favorite_black_24dp, 0, 0, 0);
+                else
+                    favoriteButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.favorite_border_black_24dp, 0, 0, 0);
+            }
+        });
 
         View root = binding.getRoot();
 
@@ -68,7 +122,13 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
         movieDetailsViewModel.getTitle().observe(getViewLifecycleOwner(), movieTitle::setText);
 
         final TextView movieSynopsis = binding.movieOverview;
-        movieDetailsViewModel.getOverview().observe(getViewLifecycleOwner(), movieSynopsis::setText);
+        movieDetailsViewModel.getOverview().observe(getViewLifecycleOwner(), overview -> {
+            if (!Objects.equals(overview, "")) {
+                movieSynopsis.setText(overview);
+            } else {
+                movieSynopsis.setText("Sinopse não disponível");
+            }
+        });
 
         final TextView movieRating = binding.movieRating;
         movieDetailsViewModel.getRating().observe(getViewLifecycleOwner(), movieRating::setText);
@@ -82,12 +142,14 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
             navController.popBackStack();
         });
 
+
         return root;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        requireActivity().findViewById(R.id.nav_view).setVisibility(View.VISIBLE);
         binding = null;
     }
 
@@ -136,7 +198,6 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
                 webView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null);
                 break;
         }
-
     }
 
     @Override
