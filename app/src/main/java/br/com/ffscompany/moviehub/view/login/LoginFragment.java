@@ -24,6 +24,7 @@ import br.com.ffscompany.moviehub.database.LocalDatabase;
 import br.com.ffscompany.moviehub.databinding.FragmentLoginBinding;
 import br.com.ffscompany.moviehub.entity.User;
 import br.com.ffscompany.moviehub.service.AESEncryption;
+import br.com.ffscompany.moviehub.service.Utils;
 
 public class LoginFragment extends Fragment {
 
@@ -78,7 +79,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        hideKeyboard(Objects.requireNonNull(getActivity()));
+        Utils.hideKeyboard(Objects.requireNonNull(getActivity()));
         fragmentLoginBinding = null;
     }
 
@@ -90,19 +91,7 @@ public class LoginFragment extends Fragment {
     }
 
     private boolean isUserLoggedIn() {
-        // Verifique se as informações da sessão (exemplo: nome de usuário) estão presentes nas SharedPreferences
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("SessionLogin", Context.MODE_PRIVATE);
         return sharedPreferences.contains("logged");
-    }
-
-    private static void hideKeyboard(Activity activity) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        //Find the currently focused view, so we can grab the correct window token from it.
-        View view = activity.getCurrentFocus();
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
-        if (view == null) {
-            view = new View(activity);
-        }
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

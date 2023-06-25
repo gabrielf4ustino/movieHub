@@ -25,6 +25,7 @@ import br.com.ffscompany.moviehub.database.LocalDatabase;
 import br.com.ffscompany.moviehub.databinding.FragmentSignBinding;
 import br.com.ffscompany.moviehub.entity.User;
 import br.com.ffscompany.moviehub.service.AESEncryption;
+import br.com.ffscompany.moviehub.service.Utils;
 
 public class SignFragment extends Fragment {
 
@@ -98,6 +99,7 @@ public class SignFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        Utils.hideKeyboard(Objects.requireNonNull(getActivity()));
         fragmentSignBinding = null;
     }
 }
