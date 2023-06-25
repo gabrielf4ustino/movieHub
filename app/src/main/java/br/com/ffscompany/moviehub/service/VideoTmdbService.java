@@ -17,7 +17,7 @@ import java.util.List;
 import retrofit2.Response;
 
 public class VideoTmdbService extends AsyncTaskLoader<String> {
-    private static final Tmdb tmdb = new Tmdb("c7dd226ddb8f77f0536becda18f3c4fb");
+    private static final Tmdb tmdb = new Tmdb("c32957f584b399b761627b576a78e213");
 
     private final Integer movieId;
 
@@ -34,14 +34,12 @@ public class VideoTmdbService extends AsyncTaskLoader<String> {
             if (response.isSuccessful()) {
                 List<Videos.Video> videos = response.body().results;
                 for (Videos.Video video : videos) {
-                    assert video.type != null;
                     if (video.type.equals(VideoType.TRAILER) && video.site.equals("YouTube")) {
                         return video.key;
                     }
                 }
                 if (videos.get(0).key != null)
                     return videos.get(0).key;
-                return "";
             } else {
                 try {
                     Log.e("TMDbApiClient", response.errorBody().string());

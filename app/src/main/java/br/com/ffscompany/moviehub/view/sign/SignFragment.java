@@ -69,7 +69,7 @@ public class SignFragment extends Fragment {
             if (name.getText().toString().equals("") || email.getText().toString().equals("") || password.getText().toString().equals("")) {
                 Toast.makeText(this.getContext(), "Preencha todos os campos.", Toast.LENGTH_SHORT).show();
             } else {
-                if (db.userModel().getUserWithFavoriteMovies(email.getText().toString()) != null) {
+                if (db.user().getUserWithFavoriteMovies(email.getText().toString()) != null) {
                     Toast.makeText(this.getContext(), "Email já cadastrado.", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -80,7 +80,7 @@ public class SignFragment extends Fragment {
                 try {
                     Key key = AESEncryption.generateKey();
                     String passwordHash = String.valueOf(AESEncryption.encrypt(password.getText().toString(), key));
-                    db.userModel().insert(new User(name.getText().toString(), email.getText().toString(), passwordHash, AESEncryption.keyToString(key)));
+                    db.user().insert(new User(name.getText().toString(), email.getText().toString(), passwordHash, AESEncryption.keyToString(key)));
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }

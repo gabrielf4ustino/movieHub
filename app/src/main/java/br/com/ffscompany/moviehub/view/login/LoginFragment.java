@@ -52,7 +52,7 @@ public class LoginFragment extends Fragment {
             if (email.getText().toString().equals("") || password.getText().toString().equals("")) {
                 Toast.makeText(this.getContext(), "Preencha todos os campos.", Toast.LENGTH_SHORT).show();
             } else {
-                UserWithFavoriteMovies user = db.userModel().getUserWithFavoriteMovies(email.getText().toString());
+                UserWithFavoriteMovies user = db.user().getUserWithFavoriteMovies(email.getText().toString());
                 if (user != null) {
                     try {
                         if (email.getText().toString().equals(user.user.getEmail()) && password.getText().toString().equals(AESEncryption.decrypt(user.user.getPassword(), AESEncryption.stringToKey(user.user.getKey())))) {
