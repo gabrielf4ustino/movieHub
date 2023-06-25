@@ -36,7 +36,7 @@ public class WatchProviderService extends AsyncTaskLoader<String> {
         }
 
         if (response.isSuccessful()) {
-            if (response.body().results.containsKey("BR")) {
+            if (response.body().results.containsKey("BR") && response.body().results.get("BR").flatrate.size() > 0) {
                 return Objects.requireNonNull(response.body().results.get("BR")).flatrate.get(0).provider_name;
             }
             return "";

@@ -11,7 +11,7 @@
         android:layout_width="100dp"
         android:layout_height="48dp"
         android:background="@android:color/transparent"
-        android:drawableStart="@drawable/icon_selector"
+        android:drawableStart="@drawable/goback_icon_black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,7 +65,7 @@
         app:layout_constraintTop_toBottomOf="@+id/sign_name" />
 
     <EditText
-        android:id="@+id/oldpassword"
+        android:id="@+id/old_password"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="10dp"
@@ -79,7 +79,7 @@
         app:layout_constraintTop_toBottomOf="@+id/sign_email" />
 
     <EditText
-        android:id="@+id/newpassword"
+        android:id="@+id/new_password"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_marginStart="10dp"
@@ -90,7 +90,7 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/oldpassword" />
+        app:layout_constraintTop_toBottomOf="@+id/old_password" />
 
     <TextView
         android:id="@+id/sign_label_confirm_password"
@@ -101,7 +101,7 @@
         android:autofillHints="password"
         android:labelFor="@id/sign_confirm_password"
         android:text="@string/newpassword"
-        app:layout_constraintBottom_toTopOf="@+id/newpassword"
+        app:layout_constraintBottom_toTopOf="@+id/new_password"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -135,7 +135,7 @@
         android:autofillHints="password"
         android:labelFor="@id/sign_password"
         android:text="@string/oldpassword"
-        app:layout_constraintBottom_toTopOf="@+id/oldpassword"
+        app:layout_constraintBottom_toTopOf="@+id/old_password"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -149,6 +149,6 @@
         app:flow_verticalAlign="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newpassword" />
+        app:layout_constraintTop_toBottomOf="@+id/new_password" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

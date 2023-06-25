@@ -11,7 +11,7 @@
         android:id="@+id/goback"
         android:layout_width="100dp"
         android:layout_height="48dp"
-        android:drawableStart="@drawable/icon_selector"
+        android:drawableStart="@drawable/goback_icon_black"
         android:background="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

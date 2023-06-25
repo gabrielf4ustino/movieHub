@@ -38,8 +38,6 @@ public class VideoTmdbService extends AsyncTaskLoader<String> {
                         return video.key;
                     }
                 }
-                if (videos.get(0).key != null)
-                    return videos.get(0).key;
             } else {
                 try {
                     Log.e("TMDbApiClient", response.errorBody().string());

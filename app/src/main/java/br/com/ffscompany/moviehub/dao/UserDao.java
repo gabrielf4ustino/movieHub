@@ -8,14 +8,13 @@ import androidx.room.Transaction;
 import androidx.room.Update;
 
 import br.com.ffscompany.moviehub.entity.User;
-import br.com.ffscompany.moviehub.entity.UserWithFavoriteMovies;
 
 @Dao
 public interface UserDao {
 
     @Transaction
     @Query("SELECT * FROM User WHERE email = :email")
-    UserWithFavoriteMovies getUserWithFavoriteMovies(String email);
+    User getUserByEmail(String email);
 
     @Update
     void update(User user);

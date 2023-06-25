@@ -12,7 +12,7 @@ import br.com.ffscompany.moviehub.entity.FavoriteMovie;
 import br.com.ffscompany.moviehub.entity.User;
 
 
-@Database(entities = {User.class, FavoriteMovie.class}, version = 5)
+@Database(entities = {User.class, FavoriteMovie.class}, version = 6)
 public abstract class LocalDatabase extends RoomDatabase {
     private static LocalDatabase INSTANCE;
 

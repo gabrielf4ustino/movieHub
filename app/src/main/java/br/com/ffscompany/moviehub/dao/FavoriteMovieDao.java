@@ -10,8 +10,6 @@ import androidx.room.Update;
 import java.util.List;
 
 import br.com.ffscompany.moviehub.entity.FavoriteMovie;
-import br.com.ffscompany.moviehub.entity.User;
-import br.com.ffscompany.moviehub.entity.UserWithFavoriteMovies;
 
 @Dao
 public interface FavoriteMovieDao {
@@ -19,6 +17,10 @@ public interface FavoriteMovieDao {
     @Transaction
     @Query("SELECT * FROM FavoriteMovie WHERE idMovie = :id LIMIT 1")
     FavoriteMovie getFavoriteMovies(Long id);
+
+    @Transaction
+    @Query("SELECT * FROM FavoriteMovie WHERE userEmail = :email")
+    List<FavoriteMovie> getFavoriteMoviesByUserEmail(String email);
 
     @Transaction
     @Query("DELETE FROM FavoriteMovie WHERE idMovie = :id")

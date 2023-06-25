@@ -1,9 +1,9 @@
 package br.com.ffscompany.moviehub.view.movieDetails;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +23,6 @@ import androidx.loader.content.Loader;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
-import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Objects;
 
 import br.com.ffscompany.moviehub.R;
@@ -51,6 +49,8 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
 
     private String releaseDate;
 
+    private String posterPath;
+
     private Boolean favorite = false;
 
     private LocalDatabase db;
@@ -63,7 +63,8 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
         this.title = bundle.getString("title");
         this.overview = bundle.getString("overview");
         this.rating = bundle.getString("rating");
-        this.releaseDate = bundle.getString("releaseDate");
+        this.releaseDate = bundle.getString("release_date");
+        this.posterPath = bundle.getString("poster_path");
         db = LocalDatabase.getDatabase(this.getContext());
         LoaderManager.getInstance(this).initLoader(movieId, null, this).forceLoad();
         LoaderManager.getInstance(this).initLoader(0, null, this).forceLoad();
@@ -98,7 +99,8 @@ public class MovieDetailsFragment extends Fragment implements LoaderManager.Load
 
         favoriteButton.setOnClickListener(view -> {
             if (!favorite) {
-                db.favoriteMovie().insert(new FavoriteMovie(Integer.toUnsignedLong(movieId), title, null, null, overview, rating, releaseDate));
+                SharedPreferences sharedPreferences = requireContext().getSharedPreferences("SessionLogin", Context.MODE_PRIVATE);
+                db.favoriteMovie().insert(new FavoriteMovie(Integer.toUnsignedLong(movieId), title, null, posterPath, overview, rating, releaseDate, sharedPreferences.getString("logged", "")));
             } else {
                 db.favoriteMovie().deleteById(Integer.toUnsignedLong(movieId));
             }

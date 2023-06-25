@@ -30,10 +30,12 @@ public class FavoriteMovie {
 
     private String releaseDate;
 
+    private String userEmail;
+
     public FavoriteMovie() {
     }
 
-    public FavoriteMovie(Long idMovie, String title, String videoLink, String posterLink, String overview, String rating, String releaseDate) {
+    public FavoriteMovie(Long idMovie, String title, String videoLink, String posterLink, String overview, String rating, String releaseDate, String userEmail) {
         this.idMovie = idMovie;
         this.title = title;
         this.videoLink = videoLink;
@@ -41,6 +43,7 @@ public class FavoriteMovie {
         this.overview = overview;
         this.rating = rating;
         this.releaseDate = releaseDate;
+        this.userEmail = userEmail;
     }
 
     public Long getId() {
@@ -105,5 +108,13 @@ public class FavoriteMovie {
 
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 }

@@ -188,6 +188,7 @@ public class HomeFragment extends Fragment implements LoaderManager.LoaderCallba
         args.putString("overview", movie.overview);
         args.putIntegerArrayList("genres", (ArrayList<Integer>) movie.genre_ids);
         args.putString("rating", String.valueOf(movie.vote_average));
+        args.putString("poster_path", movie.poster_path);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             args.putString("release_date", String.valueOf(movie.release_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear()));
         }

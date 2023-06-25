@@ -3,37 +3,27 @@ package br.com.ffscompany.moviehub.view.sign;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.room.Room;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.uwetrottmann.tmdb2.entities.BaseMovie;
-
 import java.security.Key;
-import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.Objects;
 
 import br.com.ffscompany.moviehub.R;
 import br.com.ffscompany.moviehub.database.LocalDatabase;
-import br.com.ffscompany.moviehub.databinding.FragmentLoginBinding;
 import br.com.ffscompany.moviehub.databinding.FragmentSignBinding;
 import br.com.ffscompany.moviehub.entity.User;
-import br.com.ffscompany.moviehub.entity.UserWithFavoriteMovies;
 import br.com.ffscompany.moviehub.service.AESEncryption;
 
 public class SignFragment extends Fragment {
@@ -69,7 +59,7 @@ public class SignFragment extends Fragment {
             if (name.getText().toString().equals("") || email.getText().toString().equals("") || password.getText().toString().equals("")) {
                 Toast.makeText(this.getContext(), "Preencha todos os campos.", Toast.LENGTH_SHORT).show();
             } else {
-                if (db.user().getUserWithFavoriteMovies(email.getText().toString()) != null) {
+                if (db.user().getUserByEmail(email.getText().toString()) != null) {
                     Toast.makeText(this.getContext(), "Email já cadastrado.", Toast.LENGTH_SHORT).show();
                     return;
                 }

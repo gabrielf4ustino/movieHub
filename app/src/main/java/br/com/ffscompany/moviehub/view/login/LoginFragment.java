@@ -22,7 +22,7 @@ import java.util.Objects;
 import br.com.ffscompany.moviehub.R;
 import br.com.ffscompany.moviehub.database.LocalDatabase;
 import br.com.ffscompany.moviehub.databinding.FragmentLoginBinding;
-import br.com.ffscompany.moviehub.entity.UserWithFavoriteMovies;
+import br.com.ffscompany.moviehub.entity.User;
 import br.com.ffscompany.moviehub.service.AESEncryption;
 
 public class LoginFragment extends Fragment {
@@ -52,10 +52,10 @@ public class LoginFragment extends Fragment {
             if (email.getText().toString().equals("") || password.getText().toString().equals("")) {
                 Toast.makeText(this.getContext(), "Preencha todos os campos.", Toast.LENGTH_SHORT).show();
             } else {
-                UserWithFavoriteMovies user = db.user().getUserWithFavoriteMovies(email.getText().toString());
+                User user = db.user().getUserByEmail(email.getText().toString());
                 if (user != null) {
                     try {
-                        if (email.getText().toString().equals(user.user.getEmail()) && password.getText().toString().equals(AESEncryption.decrypt(user.user.getPassword(), AESEncryption.stringToKey(user.user.getKey())))) {
+                        if (email.getText().toString().equals(user.getEmail()) && password.getText().toString().equals(AESEncryption.decrypt(user.getPassword(), AESEncryption.stringToKey(user.getKey())))) {
                             setUserSession(email.getText().toString());
                             NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_login_fragment_to_navigation_home);
                         } else {

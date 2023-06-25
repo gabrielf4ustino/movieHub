@@ -36,6 +36,9 @@
         <action
             android:id="@+id/action_navigation_profile_to_navigation_login"
             app:destination="@id/navigation_login" />
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_movie_details"
+            app:destination="@id/navigation_movie_details" />
     </fragment>
 
     <fragment

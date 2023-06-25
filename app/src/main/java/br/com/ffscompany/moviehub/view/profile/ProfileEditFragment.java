@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,12 +44,12 @@ public class ProfileEditFragment extends Fragment {
         fragmentSignBinding = FragmentProfileEditBinding.inflate(inflater, container, false);
         TextView username = fragmentSignBinding.signName;
         TextView email = fragmentSignBinding.signEmail;
-        TextView oldpassword = fragmentSignBinding.oldpassword;
-        TextView newpassword = fragmentSignBinding.newpassword;
+        TextView oldpassword = fragmentSignBinding.oldPassword;
+        TextView newpassword = fragmentSignBinding.newPassword;
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("SessionLogin", Context.MODE_PRIVATE);
 
-        Log.d("logged", sharedPreferences.getString("logged", "aaa"));
-        User user = db.userModel().getUserWithFavoriteMovies(sharedPreferences.getString("logged", "aaa")).user;
+        Log.d("logged", sharedPreferences.getString("logged", ""));
+        User user = db.user().getUserByEmail(sharedPreferences.getString("logged", ""));
         username.setText(user.getName());
         email.setText(user.getEmail());
         //armazenar a senha antiga
@@ -84,7 +83,7 @@ public class ProfileEditFragment extends Fragment {
                     user.setEmail(email.getText().toString());
                     user.setPassword(passwordHash);
                     user.setKey(AESEncryption.keyToString(key));
-                    db.userModel().update(user);
+                    db.user().update(user);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
