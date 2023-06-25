@@ -31,8 +31,8 @@
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" >
         <action
-            android:id="@+id/action_navigation_genres_to_navigation_movie_details"
-            app:destination="@id/navigation_movie_details" />
+            android:id="@+id/action_navigation_profile_to_navigation_edit_profile"
+            app:destination="@id/navigation_edit_profile" />
         <action
             android:id="@+id/action_navigation_profile_to_navigation_login"
             app:destination="@id/navigation_login" />
@@ -75,5 +75,13 @@
         <action
             android:id="@+id/action_navigation_sign_to_navigation_login"
             app:destination="@id/navigation_login" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_edit_profile"
+        android:name="br.com.ffscompany.moviehub.view.profile.ProfileEditFragment"
+        tools:layout="@layout/fragment_profile_edit" >
+        <action
+            android:id="@+id/action_navigation_edit_profile_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
     </fragment>
 </navigation>

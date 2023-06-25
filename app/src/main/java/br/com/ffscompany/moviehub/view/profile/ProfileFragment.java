@@ -57,7 +57,7 @@ public class ProfileFragment extends Fragment {
         Button logoutButton = fragmentSignBinding.logoutButton;
 
         editButton.setOnClickListener(v -> {
-
+            NavHostFragment.findNavController(this).navigate(R.id.action_navigation_profile_to_navigation_edit_profile);
         });
 
         logoutButton.setOnClickListener(v -> {

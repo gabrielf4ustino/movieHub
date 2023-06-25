@@ -9,10 +9,14 @@
     <string name="popular">Populares</string>
     <string name="email">E-mail</string>
     <string name="password">Senha</string>
+    <string name="oldpassword">Senha Atual</string>
+    <string name="newpassword">Senha Nova</string>
     <string name="enter">Entrar</string>
+    <string name="salvar">Salvar</string>
     <string name="crie_um_perfil">Crie um perfil</string>
     <string name="novo_por_aqui">Novo por aqui?</string>
     <string name="sign">Registrar-se</string>
+    <string name="edit">Editar Pefil</string>
     <string name="name">Nome</string>
     <string name="confirm_password">Confirme a senha</string>
     <string name="genre">Gênero</string>
@@ -41,5 +45,7 @@
         <item>10752:Guerra</item>
         <item>37:Faroeste</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
