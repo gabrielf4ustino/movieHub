@@ -70,7 +70,7 @@ public class SignFragment extends Fragment {
                 try {
                     Key key = AESEncryption.generateKey();
                     String passwordHash = String.valueOf(AESEncryption.encrypt(password.getText().toString(), key));
-                    db.user().insert(new User(name.getText().toString(), email.getText().toString(), passwordHash, AESEncryption.keyToString(key)));
+                    db.user().insert(new User(name.getText().toString(), email.getText().toString(), passwordHash, AESEncryption.keyToString(key),null));
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }

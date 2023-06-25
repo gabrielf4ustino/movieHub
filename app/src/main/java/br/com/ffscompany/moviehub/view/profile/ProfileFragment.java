@@ -1,14 +1,20 @@
 package br.com.ffscompany.moviehub.view.profile;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,9 +37,10 @@ import br.com.ffscompany.moviehub.view.home.recyclerView.FavoriteMovieViewAdapte
 public class ProfileFragment extends Fragment {
 
     private LocalDatabase db;
-
+    private ImageView image;
     private FragmentProfileBinding fragmentSignBinding;
-
+    private String imagePath;
+    private User user;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +51,7 @@ public class ProfileFragment extends Fragment {
         fragmentSignBinding = FragmentProfileBinding.inflate(inflater, container, false);
         TextView username = fragmentSignBinding.userName;
         TextView email = fragmentSignBinding.userEmail;
+        image = fragmentSignBinding.imageProfile;
 
         Button configButton = fragmentSignBinding.configButton;
         Button logoutButton = fragmentSignBinding.logoutButton;
@@ -59,7 +67,7 @@ public class ProfileFragment extends Fragment {
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("SessionLogin", Context.MODE_PRIVATE);
 
         String userEmail = sharedPreferences.getString("logged", "");
-        User user = db.user().getUserByEmail(userEmail);
+        user = db.user().getUserByEmail(userEmail);
         if (user == null) {
             removeUserSession();
             requireActivity().findViewById(R.id.nav_view).setVisibility(View.GONE);
@@ -68,6 +76,10 @@ public class ProfileFragment extends Fragment {
             username.setText(user.getName());
             email.setText(user.getEmail());
             Button editButton = fragmentSignBinding.configButton;
+            imagePath = user.getImagePath();
+            if (imagePath != null) {
+                image.setImageURI(Uri.parse(imagePath));
+            }
 
             editButton.setOnClickListener(v -> {
                 NavHostFragment.findNavController(this).navigate(R.id.action_navigation_profile_to_navigation_edit_profile);
@@ -85,9 +97,27 @@ public class ProfileFragment extends Fragment {
             movies.setLayoutManager(new GridLayoutManager(getContext(), 4));
             movies.setAdapter(new FavoriteMovieViewAdapter(getContext(), favoriteMovies, movie -> navigate(movie, R.id.action_navigation_profile_to_navigation_movie_details)));
         }
+        image.setOnClickListener(v -> {
+            Intent iGallery = new Intent(Intent.ACTION_PICK);
+            iGallery.setType("image/*");
+            startActivityForResult(iGallery, 1000);
+        });
+
         return fragmentSignBinding.getRoot();
     }
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (resultCode == RESULT_OK && requestCode == 1000 && data != null) {
+            Uri selectedImage = data.getData();
+            if (selectedImage != null) {
+                image.setImageURI(selectedImage);
+                imagePath = selectedImage.toString();
+                user.setImagePath(imagePath);
+                db.user().update(user);
+            }
+        }
+    }
     private void navigate(FavoriteMovie movie, int id) {
         Bundle args = new Bundle();
         args.putInt("id", Math.toIntExact(movie.getIdMovie()));

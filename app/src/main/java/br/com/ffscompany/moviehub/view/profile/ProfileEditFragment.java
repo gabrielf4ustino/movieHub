@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,8 +49,8 @@ public class ProfileEditFragment extends Fragment {
         TextView newpassword = fragmentSignBinding.newPassword;
         SharedPreferences sharedPreferences = requireContext().getSharedPreferences("SessionLogin", Context.MODE_PRIVATE);
 
-        Log.d("logged", sharedPreferences.getString("logged", ""));
-        User user = db.user().getUserByEmail(sharedPreferences.getString("logged", ""));
+        Log.d("logged", sharedPreferences.getString("logged", "aaa"));
+        User user = db.user().getUserByEmail(sharedPreferences.getString("logged", "aaa"));
         username.setText(user.getName());
         email.setText(user.getEmail());
         //armazenar a senha antiga
@@ -61,13 +62,13 @@ public class ProfileEditFragment extends Fragment {
             if (username.getText().toString().equals("") || email.getText().toString().equals("") || localPassword.equals("")) {
                 Toast.makeText(this.getContext(), "Preencha todos os campos.", Toast.LENGTH_SHORT).show();
             } else {
-                if(!oldpassword.getText().toString().isEmpty()){
+                if(!oldpassword.getText().toString().isEmpty()) {
                     try {
                         trueLocalPassword = String.valueOf(AESEncryption.decrypt(localPassword, AESEncryption.stringToKey(trueKey)));
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
-                    if(!oldpassword.getText().toString().equals(trueLocalPassword)){
+                    if (!oldpassword.getText().toString().equals(trueLocalPassword)) {
                         Toast.makeText(this.getContext(), "Senha Atual incorreta.", Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -75,18 +76,16 @@ public class ProfileEditFragment extends Fragment {
                         Toast.makeText(this.getContext(), "Senha Nova Invalida", Toast.LENGTH_SHORT).show();
                         return;
                     }
+                    try {
+                        String passwordHash = String.valueOf(AESEncryption.encrypt(newpassword.getText().toString(), AESEncryption.stringToKey(trueKey)));
+                        user.setPassword(passwordHash);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
                 }
-                try {
-                    Key key = AESEncryption.generateKey();
-                    String passwordHash = String.valueOf(AESEncryption.encrypt(newpassword.getText().toString(), key));
-                    user.setName(username.getText().toString());
-                    user.setEmail(email.getText().toString());
-                    user.setPassword(passwordHash);
-                    user.setKey(AESEncryption.keyToString(key));
-                    db.user().update(user);
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+                user.setName(username.getText().toString());
+                user.setEmail(email.getText().toString());
+                db.user().update(user);
                 Toast.makeText(this.getContext(), "Usuário atualizado com sucesso.", Toast.LENGTH_SHORT).show();
                 NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_navigation_edit_profile_to_navigation_profile);
             }
