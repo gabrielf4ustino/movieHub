@@ -1,31 +1,28 @@
-## Aplicativo de Filmes
-## Sobre o Aplicativo
-- Este aplicativo de filmes foi desenvolvido utilizando o Android Studio, utilizando a linguagem Java, como parte de um trabalho prático para a disciplina de Programação para Dispositivos Móveis.
-### Alunos
-- João Pedro de Melo Roberto
-- Gabriel Faustino de Freitas Silva
+## MovieHub
+## About the Application
+- This movie application was developed using Android Studio, using the Java language, as part of practical work for the Mobile Programming discipline.
 
-### Visão Geral
-Este é um aplicativo que lista filmes, mostrando informações sobre o filme, como nome e enredo. O usuário pode procurar pelo nome do filme, buscar por tema e também pode adicionar filmes aos favoritos, armazenando-os. Caso a pessoa já tenha visto o filme, ela pode removê-lo da sua lista de filmes.
+### Overview
+This is an app that lists movies, showing information about the movie such as name and plot. The user can search by movie name, search by theme and can also add movies to favorites by storing them. If the person has already seen the film, they can remove it from their film list.
 
-### Requisitos Funcionais
-- Os usuários são pessoas amantes do cinema que procuram ter um aplicativo no qual possam ter acesso direto a informações de filmes famosos e seus trailers.
-- Todo usuário deve se cadastrar inicialmente.
-- Após o cadastro, o usuário tem a liberdade de deslizar pela tela inicial, observando os filmes mais populares e de diferentes gêneros.
-- O usuário pode procurar pelo nome do filme digitando-o.
-- O usuário possui um perfil onde são armazenados todos os seus filmes favoritos.
-- O aplicativo utiliza uma API de filmes para gerar um conjunto de filmes que podem ser acessados.
-- É possível obter informações sobre o filme através da API.
-- O programa permite a exibição, pesquisa e favoritação de filmes.
-- O aplicativo armazena as escolhas do usuário, incluindo o perfil do usuário e os filmes selecionados. Cada usuário tem seu próprio conjunto de filmes.
+### Functional Requirements
+- Users are movie lovers who are looking to have an application in which they can have direct access to information about famous films and their trailers.
+- Every user must register initially.
+- After registering, the user has the freedom to scroll through the home screen, viewing the most popular films of different genres.
+- User can search for movie name by typing it.
+- The user has a profile where all their favorite films are stored.
+- The application uses a movie API to generate a set of movies that can be accessed.
+- It is possible to obtain information about the film through the API.
+- The program allows you to view, search and favorite films.
+- The application stores the user's choices, including the user's profile and selected films. Each user has their own set of movies.
 
-### Como Executar o Aplicativo
-1. Clone este repositório para sua máquina local.
-2. Certifique-se de ter instalado AndroidStudio versão Flamingo Canary 1  ou superior.
-3. Siga o procedimento para instalar o AndroidStudio e instalar o Emulador atravez do link: developer.android.com/studio/install
-4. Abra o repositorio pelo AndroidStudio
-5. Clique em Run para rodar o aplicativo
+### How to Run the Application
+1. Clone this repository to your local machine.
+2. Make sure you have installed AndroidStudio version Flamingo Canary 1 or higher.
+3. Follow the procedure to install AndroidStudio and install the Emulator through the link: developer.android.com/studio/install
+4. Open the repository through AndroidStudio
+5. Click Run to run the application
 
-### Contato
+### Contact
 - João Pedro de Melo Roberto - joao_melo@ufms.br
 - Gabriel Faustino de Freitas Silva - g.faustino@ufms.br
